@@ -1,0 +1,16 @@
+@CHARSET "ISO-8859-1";
+/*
+ Theme Name:   Tls Theme
+ Theme URI:    http://zendvn.com/twenty-ten-child/
+ Description:  Theme kế thừa từ theme TwentyTen 
+ Author:       Tien Le
+ Author URI:   http://zendvn.com
+ Template:     twentyten
+ Version:      1.0.0
+ License:      GNU General Public License v2 or later
+ License URI:  http://www.gnu.org/licenses/gpl-2.0.html
+ Tags:         light, dark, two-columns, right-sidebar, responsive-layout, accessibility-ready
+ Text Domain:  twenty-ten-child
+*/
+
+@import url('../twentyten/style.css');

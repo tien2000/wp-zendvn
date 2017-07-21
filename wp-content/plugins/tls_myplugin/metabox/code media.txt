@@ -1,0 +1,37 @@
+File Js:
+(function($){	
+	$.fn.tlsBtnMedia = function(inputID){
+		var backupSendToEditor = window.send_to_editor;
+		this.click(function(){
+			tb_show('','media-upload.php?type=image&amp;TB_iframe=true');		
+			window.send_to_editor = function(html){
+				imgUrl = $('img',html).attr('src');
+				$('#' + inputID).val(imgUrl);
+				tb_remove();
+				window.send_to_editor = backupSendToEditor;
+			}
+			return false;
+		});
+	};	
+}(jQuery));
+
+
+File media-> function display($post_id):
+	echo $htmlObj->btn_media_script($btnId, $inputId);
+
+File html:
+	public function btn_media_script($button_id,$input_id){
+	    $script = "<script>
+    	               jQuery(document).ready(function($){
+    	               $('#{$button_id}').tlsBtnMedia('{$input_id}');
+    	               });
+    	           </script>";
+	    return $script;
+	}
+
+Add file Js:
+	public function addJSFile(){
+            wp_register_script('tls_mp_mb_button_media', TLS_PLUGIN_JS_URL. 'tls-media-button.js',
+                                    array('jquery','media-upload','thickbox'),'1.0');
+            wp_enqueue_script('tls_mp_mb_button_media');
+        }

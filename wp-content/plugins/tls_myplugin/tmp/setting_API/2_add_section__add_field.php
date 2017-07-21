@@ -1,0 +1,48 @@
+<?php 
+    class TlsMpAdmin{
+        private $_menuSlug = 'tls-mp-my-setting';
+
+        public function __construct(){
+            add_action( 'admin_menu', array($this, 'addMySettingPage') );
+            add_action( 'admin_menu', array($this, 'registerSettingAndFields') );
+        }
+
+        public function registerSettingAndFields(){
+            register_setting( 'tls_mp_options_group', 'tls_mp_options_setting', array($this, 'validateSetting') );
+
+            add_settings_section( 'tls-mp-main-section', 'Main Section', array($this, 'myMainSection'), $this->_menuSlug );
+
+            add_settings_field( 'tls-mp-site-title-field', 'Site Title', array($this, 'mySiteTitle'), $this->_menuSlug, 
+                                    'tls-mp-main-section' );
+
+            add_settings_section( 'tls-mp-ext-section', 'Extend Section', array($this, 'myMainSection'), $this->_menuSlug );
+
+            add_settings_field( 'tls-mp-site-title-field', 'Site Title', array($this, 'mySiteTitle2'), $this->_menuSlug, 
+                                    'tls-mp-ext-section' );
+        }
+
+        public function validateSetting(){
+
+        }
+
+        public function myMainSection(){
+
+        }
+
+        public function mySiteTitle(){
+            echo '<input type="text" name="tls_mp_options_setting[tls-mp-site-title-field]" value="" />';
+        }
+
+        public function mySiteTitle2(){
+            echo '<input type="text" name="tls_mp_options_setting[tls-mp-site-title-field]" value="" />';
+        }
+
+        public function addMySettingPage(){
+            add_menu_page( 'My Settings', 'My Settings', 'manage_options', $this->_menuSlug, array($this, 'mySettingPage') );
+        }
+
+        public function mySettingPage(){
+            require TLS_MP_VIEWS_DIR . 'my-setting-page.php';
+        }
+    }
+?>

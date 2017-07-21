@@ -1,0 +1,43 @@
+== Changelog ==
+
+= 0.3.1 =
+* Removed Hybrid Custom Widgets for Default WP Widgets
+* Added text Domain & Removed Deprecated Tag to Style.css
+* Added Theme Documentation page to Admin
+* Added Theme Support for Title Tag
+* Removed shortcodes.php
+* Changed instances of apply_atomic_shortcode to native WordPress functions in:
+archive.php
+attachment.php
+comment.php
+footer.php
+home.php
+index.php
+page-template-archives.php
+page-template-bookmarks.php
+page-template-fullwidth.php
+page.php
+post.php
+search.php
+singular.php
+* Removed Theme Settings page and moved options to customizer
+* Added logo support
+* Changed #site-title and #site-decription to .site-title and .site-description
+* Changed get_bloginfo( 'text_direction' ) to is_rtl( 'text_direction' ) in context.php
+* Updated placeholder graphics
+
+
+= 0.3.0 =
+* Updated the screenshot to 880x660.
+* Updated Hybrid Core to 1.6.2.
+
+= 0.2.9 =
+* Updated Hybrid Core to 1.6.
+* Various CSS and PHP improvements to reflect changes in the framework.
+
+= 0.2.6 =
+* Added changelog.txt file.
+* Updated Hybrid Core to 1.4.3.
+* Tuned the Theme Settings page to adhere to the core WordPress admin styles.
+* Fixed a jQuery bug preventing the Media Tools button from functioning in the Theme Settings.
+* Removed hatch_entry_title_shortcode() from functions.php (not needed anymore).

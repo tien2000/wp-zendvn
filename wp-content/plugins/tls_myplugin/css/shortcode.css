@@ -1,0 +1,9 @@
+@CHARSET "ISO-8859-1";
+
+.tls_mp_sc_show_date{
+	padding: 5px;
+	margin: 5px 0;
+	border: 1px solid red;
+	color: red;
+	text-align: center;
+}

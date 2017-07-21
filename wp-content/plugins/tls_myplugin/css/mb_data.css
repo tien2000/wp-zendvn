@@ -1,0 +1,11 @@
+@CHARSET "ISO-8859-1";
+
+.tls_mb_data_wrap{
+	overflow-x: auto; 
+}
+
+.tls_mb_data_wrap label{
+	display: block; 
+	font-weight: bold;
+	margin-bottom: 3px;
+}

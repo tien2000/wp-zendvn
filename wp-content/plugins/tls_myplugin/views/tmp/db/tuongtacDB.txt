@@ -1,0 +1,104 @@
+========================================
+1. $wpdb->get_row()
+========================================
+	global $wpdb;
+    $table = $wpdb->prefix . 'mp_article';
+    $query = "SELECT * FROM {$table} WHERE status = 1";
+    $output = OBJECT;   // OBJECT, ARRAY_A, or ARRAY_N
+    $info = $wpdb->get_row($query, $output, 1);
+
+    echo '<pre>';
+    print_r($info);
+    echo '</pre>';
+    
+========================================
+2. $wpdb->get_col()
+========================================
+    global $wpdb;
+
+    $table = $wpdb->prefix . 'mp_article';
+    $query = "SELECT * FROM {$table} WHERE status = 1";
+    $info = $wpdb->get_col($query, 1);
+    echo '<pre>';
+    print_r($info);
+    echo '</pre>';
+    
+========================================
+3. $wpdb->get_results()
+======================================== 
+    global $wpdb;
+    $table = $wpdb->prefix . 'mp_article';
+    $query = "SELECT * FROM {$table} WHERE status = 1";
+    $output = ARRAY_A;
+    $info = $wpdb->get_results($query, $output);
+    echo '<pre>';
+    
+========================================
+4. $wpdb->insert()
+======================================== 
+    global $wpdb;
+    $table = $wpdb->prefix . 'mp_article';
+    $query = "SELECT * FROM {$table} WHERE status = 1";
+    $data = array(
+        'title' => 'This is a test',
+        'picture' => 'abc.png',
+        'content' => 'This is a content',
+        'status' => 1
+    );
+    $format = array('%s', '%s', '%s', '%d');
+    $info = $wpdb->insert($table, $data, $format);
+    
+========================================
+5. $wpdb->replace()
+========================================     
+    global $wpdb;
+	$table = $wpdb->prefix . 'mp_article';
+	$data = array(
+	    'id' => 20,
+	    'title' => 'This is a test 123',
+	    'picture' => 'abc123.png',
+	    'content' => 'This is a content 123',
+	    'status' => 0
+	);
+	$format = array('%d' ,'%s', '%s', '%s', '%d');	
+	$info = $wpdb->replace($table, $data, $format);
+	
+========================================
+6. $wpdb->update()
+========================================
+	global $wpdb;
+    $table = $wpdb->prefix . 'mp_article';
+    $data = array(
+        'title' => 'This is a test 456',
+        'picture' => 'abc456.png',
+        'content' => 'This is a content 456',
+        'status' => 1
+    );
+    $where = array('id' => 20);
+    $format = array('%s', '%s', '%s', '%d');
+    $where_format = array('%d');
+    $info = $wpdb->update($table, $data, $where, $format, $where_format);
+    
+========================================
+7. $wpdb->delete()
+========================================   
+    global $wpdb;
+	$table = $wpdb->prefix . 'mp_article';
+	$where = array('id' => 19);
+	$where_format = array('%d');	
+	$info = $wpdb->delete($table, $where, $where_format);
+	
+========================================
+8. $wpdb->prepare()
+======================================== 	
+	global $wpdb;
+    $table = $wpdb->prefix . 'mp_article';
+    $title      = 'This is a test 2';
+    $picture    = 'abc2.png';
+    $content    = 'This is content 2';
+    $status     = 0;
+    $query = "INSERT INTO {$table} (`title`, `picture`, `content`, `status`)
+                VALUE (%s, %s, %s, %d)";
+    $info = $wpdb->prepare($query, $title, $picture, $content, $status);
+    $query = $wpdb->query($info);
+    

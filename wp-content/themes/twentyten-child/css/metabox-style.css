@@ -1,0 +1,8 @@
+@CHARSET "ISO-8859-1";
+
+.tls-meta-box{
+	border: 1px solid #ccc;
+	padding: 3px;
+	margin: 5px 0;
+	background: #f2f7fc;
+}
