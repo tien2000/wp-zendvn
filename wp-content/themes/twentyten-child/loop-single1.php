@@ -14,10 +14,32 @@
  * @since Twenty Ten 1.2
  */
 ?>
+<style>
+#tls-mp-info{
+	background-color: white;
+	min-height: 300px;
+	border: solid 1px #ccc;
+	padding: 10px;
+}
+</style>
 
 <h2><?php single_post_title('Tls: ', true);?></h2>
 
 <?php if ( have_posts() ) while ( have_posts() ) : the_post(); ?>
+<div id="tls-mp-info">
+	<ul>
+		<li>the_author()			: <?php the_author();?> </li>
+		<li>get_the_author()		: <?php echo get_the_author();?> </li>
+		<li>the_author_link()		: <?php the_author_link();?> </li>
+		<li>get_the_author_link()	: <?php echo get_the_author_link();?> </li>
+		<li>the_author_meta()		: <?php the_author_meta()?> </li>
+		<li>the_author_posts()		: <?php the_author_posts();?> </li>	
+		<li>the_author_posts_link()	: <?php the_author_posts_link()?> </li>
+		<li>wp_dropdown_users()		: <?php wp_dropdown_users();?> </li>
+		<li>wp_list_authors()		: <?php wp_list_authors()?> </li>
+		<li>get_author_posts_url()	: <?php echo get_author_posts_url(3);?> </li>	
+	</ul>
+</div>
 
 				<div id="nav-above" class="navigation">
 					<div class="nav-previous"><?php previous_post_link( '%link', '<span class="meta-nav">' . _x( '&larr;', 'Previous post link', 'twentyten' ) . '</span> %title' ); ?></div>

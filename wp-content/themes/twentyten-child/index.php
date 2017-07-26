@@ -14,34 +14,10 @@
  */
 
 get_header(); ?>
-<style type="text/css">
-    #tls-mp-info{
-    	border: 1px solid #ccc;
-    	background: white;
-    	min-height: 100px;
-    }
-</style>
 
 		<div id="container">
 			<div id="content" role="main">
-			<div id="tls-mp-info">
-
-<?php $args = array(
-	'type'            => 'monthly',
-	'limit'           => '',
-	'format'          => 'html',
-	'before'          => '',
-	'after'           => '',
-	'show_post_count' => false,
-	'echo'            => 1,
-	'order'           => 'DESC',
-        'post_type'     => 'post'
-); ?>
-
-				<ul>
-					<li>wp_get_archives('type'): <?php wp_get_archives($args['post_type']); ?></li>
-				</ul>
-			</div>
+			
 			<?php
 			/*
 			 * Run the loop to output the posts.
