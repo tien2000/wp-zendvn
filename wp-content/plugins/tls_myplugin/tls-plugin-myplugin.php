@@ -2,7 +2,7 @@
 /*
  * Plugin Name: TIENLS MyPlugin
  * Plugin URI: http://www.webcuatui.com
- * Description: Tự học lập trình Wordpress với ZendVN
+ * Description: Tự học lập trình Wordpress ZendVN
  * Author: Tien Le
  * Version: 1.0
  * Author URI: http://www.webcuatui.com
@@ -11,6 +11,7 @@
 define('TLS_PLUGIN_URL', plugin_dir_url( __FILE__ ));
 define('TLS_PLUGIN_CSS_URL', TLS_PLUGIN_URL . 'css/');
 define('TLS_PLUGIN_JS_URL', TLS_PLUGIN_URL . 'js/');
+define('TLS_PLUGIN_IMAGES_URL', TLS_PLUGIN_URL . 'images/');
 
 
 define('TLS_PLUGIN_DIR', plugin_dir_path( __FILE__ ));
@@ -20,6 +21,7 @@ define('TLS_PLUGIN_WIDGETS_DIR', TLS_PLUGIN_DIR . '/widgets/');
 define('TLS_PLUGIN_SHORTCODES_DIR', TLS_PLUGIN_DIR . '/shortcodes/');
 define('TLS_PLUGIN_METABOX_DIR', TLS_PLUGIN_DIR . '/metabox/');
 define('TLS_PLUGIN_SETTINGS_DIR', TLS_PLUGIN_DIR . '/settings/');
+define('TLS_PLUGIN_CUSTOMPOSTS_DIR', TLS_PLUGIN_DIR . '/posts/');
 
 if(!is_admin()){
     require_once TLS_PLUGIN_INCLUDES_DIR . 'public.php';
@@ -37,6 +39,11 @@ if(!is_admin()){
 
 require_once TLS_PLUGIN_SHORTCODES_DIR . 'main.php';
 new Tls_Mp_Sc_Main();
+
+require_once TLS_PLUGIN_CUSTOMPOSTS_DIR . 'product.php';
+new Tls_Mp_Cp_Product();
+
+
 
 //////////// last_post //////////////
 /* require_once TLS_PLUGIN_WIDGETS_DIR . 'last_post.php';
