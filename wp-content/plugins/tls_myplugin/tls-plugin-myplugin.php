@@ -37,13 +37,13 @@ if(!is_admin()){
     new Tls_Mp_Metabox_Main(); */
 }
 
-require_once TLS_PLUGIN_SHORTCODES_DIR . 'main.php';
-new Tls_Mp_Sc_Main();
-
+////////////////// Khu vực cả font-end và back-end đều hiển thị ////////////////////
 require_once TLS_PLUGIN_CUSTOMPOSTS_DIR . 'product.php';
 new Tls_Mp_Cp_Product();
 
 
+/* require_once TLS_PLUGIN_SHORTCODES_DIR . 'main.php';
+ new Tls_Mp_Sc_Main(); */
 
 //////////// last_post //////////////
 /* require_once TLS_PLUGIN_WIDGETS_DIR . 'last_post.php';

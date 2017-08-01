@@ -27,7 +27,7 @@
 
 					<div class="entry-meta">
 						<?php twentyten_posted_on(); ?>
-					</div><!-- .entry-meta -->					
+					</div><!-- .entry-meta -->
 
 					<div class="entry-content">
 						<?php the_content(); ?>
