@@ -7,15 +7,15 @@
             $defaultOptions = array(
                 'tls_mp_mb_simple' => false,
                 'tls_mp_mb_data' => false,
-                'tls_mp_mb_data2' => false,
+                'tls_mp_mb_data2' => true,
                 'tls_mp_mb_editor' => false,
-                'tls_mp_mb_media' => true
+                'tls_mp_mb_media' => false
             );
             $this->_metabox_option = get_option($this->_metabox_name, $defaultOptions);
-            //$this->simple();
-            //$this->data();
+            $this->simple();
+            $this->data();
             $this->data2();
-            //$this->editor();
+            $this->editor();
             $this->media();
         }
 

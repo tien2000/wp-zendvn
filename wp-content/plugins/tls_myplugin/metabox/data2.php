@@ -1,4 +1,9 @@
 <?php
+/*
+ * sanitize_text_field(): Dùng cho textbox, textarea, làm sạch dữ liệu trước khi lưu vào database (phòng ngừa mã độc)
+ * get_post_meta(): Lấy dữ liệu từ datatabse hiển thị lên website.
+ */
+
     class Tls_Mp_Metabox_Data2{
         private $_meta_box_id = 'tls_mp_mb_data2';
         private $_prefix_id = 'tls_mp_mb_data2_';
@@ -11,7 +16,7 @@
 
         public function create() {
             add_action('admin_enqueue_scripts', array($this, 'addCSSFile'));
-            add_meta_box($this->_meta_box_id, 'My Data', array($this, 'display'), 'page');
+            add_meta_box($this->_meta_box_id, 'My Data', array($this, 'display'), 'tproduct');
         }
 
         private function create_key($val){

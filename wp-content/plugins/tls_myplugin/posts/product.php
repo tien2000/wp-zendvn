@@ -12,6 +12,7 @@
  * 
  * is_home(): Kiểm tra có phải ở trang đầu hay ko.
  * is_single(): Kiểm tra có phải đang ở trang hiển thị 1 bài viết thông thường hay ko.
+ * is_archive(): Kiểm tra có phải đang ở trang archive.php ko. Nếu đúng trả về giá trị 1.
  * 
  * $query->is_main_query(): Khi gặp câu Query nằm trong vùng chạy chính thì mới xử lý bằng cách thêm vào 
  *                           post_type và post_type bao gồm 2 giá trị ('post', 'tproduct'). Nếu không sử dụng
@@ -28,16 +29,33 @@
         }
         
         public function loadTemplate($template_file) {
-            //echo '<br>'. __FUNCTION__;            
+            global $wp;
+            /* echo '<br>'. __FUNCTION__;
+            echo '<br>'. $template_file;
+            echo '<br>'. $wp->query_vars['post_type'];
+            echo '<br>'. is_archive(); */
             
             if(is_single()){
-                echo '<br>'. $template_file;
-                global $wp;
+                //echo '<br>'. $template_file;                
                 /* echo '<pre>';
                 print_r($wp);
                 echo '</pre>'; */
+                
                 if($wp->query_vars['post_type'] == 'tproduct'){
-                    echo '<br/>' . locate_template('loop-tproduct.php');
+                    //echo '<br>' . locate_template('loop-tproduct.php');
+                    $file = TLS_PLUGIN_CUSTOMPOSTS_DIR . 'templates/loop-tproduct.php';
+                    if(file_exists($file)){
+                        $template_file = $file; //Kiểm tra file loop-tproduct.php có tồn tại ko, nếu ko sẽ chạy file loop-single.php
+                    }
+                }
+            }
+            
+            if(is_archive()){
+                if($wp->query_vars['post_type'] == 'tproduct'){
+                    $file = TLS_PLUGIN_CUSTOMPOSTS_DIR . 'templates/list-tproduct.php';
+                    if(file_exists($file)){
+                        $template_file = $file; //Kiểm tra file list-tproduct.php có tồn tại ko, nếu ko sẽ chạy file loop-single.php
+                    }
                 }
             }
             
@@ -63,7 +81,8 @@
                 'search_items'          => __('Search Product'),
                 'not_found'             => __('No product found.'),
                 'not_found_in_trash'    => __('No product found in Trash'),
-                'view_item'    => __('View Product'),
+                'view_item'             => __('View Product'),
+                'edit_item'             => __('Edit TProduct')
             );
             
             $args = array(
