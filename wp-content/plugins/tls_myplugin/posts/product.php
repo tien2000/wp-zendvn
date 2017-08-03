@@ -41,7 +41,7 @@
                 print_r($wp);
                 echo '</pre>'; */
                 
-                if($wp->query_vars['post_type'] == 'tproduct'){
+                if(isset($wp->query_vars['post_type']) && $wp->query_vars['post_type'] == 'tproduct'){
                     //echo '<br>' . locate_template('loop-tproduct.php');
                     $file = TLS_PLUGIN_CUSTOMPOSTS_DIR . 'templates/loop-tproduct.php';
                     if(file_exists($file)){
@@ -51,7 +51,7 @@
             }
             
             if(is_archive()){
-                if($wp->query_vars['post_type'] == 'tproduct'){
+                if(isset($wp->query_vars['post_type']) && $wp->query_vars['post_type'] == 'tproduct'){
                     $file = TLS_PLUGIN_CUSTOMPOSTS_DIR . 'templates/list-tproduct.php';
                     if(file_exists($file)){
                         $template_file = $file; //Kiểm tra file list-tproduct.php có tồn tại ko, nếu ko sẽ chạy file loop-single.php
