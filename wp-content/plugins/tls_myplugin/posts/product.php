@@ -41,18 +41,18 @@
                 print_r($wp);
                 echo '</pre>'; */
                 
-                if(isset($wp->query_vars['post_type']) && $wp->query_vars['post_type'] == 'tBook'){
+                if(isset($wp->query_vars['post_type']) && $wp->query_vars['post_type'] == 'tproduct'){
                     //echo '<br>' . locate_template('loop-tBook.php');
-                    $file = TLS_PLUGIN_CUSTOMPOSTS_DIR . 'templates/loop-tBook.php';
+                    $file = TLS_PLUGIN_CUSTOMPOSTS_DIR . 'templates/loop-tproduct.php';
                     if(file_exists($file)){
-                        $template_file = $file; //Kiểm tra file loop-tBook.php có tồn tại ko, nếu ko sẽ chạy file loop-single.php
+                        $template_file = $file; //Kiểm tra file loop-tproduct.php có tồn tại ko, nếu ko sẽ chạy file loop-single.php
                     }
                 }
             }
             
             if(is_archive()){
-                if(isset($wp->query_vars['post_type']) && $wp->query_vars['post_type'] == 'tBook'){
-                    $file = TLS_PLUGIN_CUSTOMPOSTS_DIR . 'templates/list-tBook.php';
+                if(isset($wp->query_vars['post_type']) && $wp->query_vars['post_type'] == 'tproduct'){
+                    $file = TLS_PLUGIN_CUSTOMPOSTS_DIR . 'templates/list-tproduct.php';
                     if(file_exists($file)){
                         $template_file = $file; //Kiểm tra file list-tBook.php có tồn tại ko, nếu ko sẽ chạy file loop-single.php
                     }
@@ -64,7 +64,7 @@
         
         public function showHome($query){
             if(is_home() && $query->is_main_query()){
-                $query->set('post_type', array('post', 'tBook')); // Hiển thị cả post và tBook trên Home
+                $query->set('post_type', array('post', 'tproduct')); // Hiển thị cả post và tproduct trên Home
             }
             
             return $query;
