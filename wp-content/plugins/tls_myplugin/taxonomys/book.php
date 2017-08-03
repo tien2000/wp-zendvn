@@ -10,22 +10,22 @@
         
         public function create() {
             $labels = array(
-                'name'          => 'Book Categories',
-                'singular'      => 'Book Category',
-                'menu_name'     => 'Book Categories 123',
+                'name'          => 'Categories',
+                'singular'      => 'Category',
+                'menu_name'     => 'Categories',
                 //'all_items'     => chưa xác định
                 //'view_item'     => chưa xác định
-                'edit_item'     => 'Edit Book Category',
-                'update_item'   => 'Update Book Category',
-                'add_new_item'  => 'Add New Book Category',
+                'edit_item'     => 'Edit Category',
+                'update_item'   => 'Update Category',
+                'add_new_item'  => 'Add New Category',
                 //'new_item_name'     => chưa xác định
                 //'parent_item'     => chưa xác định
                 //'parent_item_colon'     => chưa xác định
-                'search_items'  => 'Search Book Category',
-                'popular_items' => 'Popular Book Category',
-                'separate_items_with_commas'    => 'Separate tags with commas 123',
-                'choose_from_most_used'         => 'Choose from the most used tags 123',
-                'not_found'                     => 'No Book Categories found'
+                'search_items'  => 'Search Category',
+                'popular_items' => 'Popular Category',
+                'separate_items_with_commas'    => 'Separate tags with commas',
+                'choose_from_most_used'         => 'Choose from the most used tags',
+                'not_found'                     => 'No Categories found'
             );
             
             $args = array(
@@ -42,6 +42,6 @@
                 'rewrite'           => array('slug' => 'book-cat')
             );
             
-            register_taxonomy('book-category', 'post', $args);
+            register_taxonomy('book-category', 'tproduct', $args);
         }
     }

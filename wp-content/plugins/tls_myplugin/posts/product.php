@@ -15,7 +15,7 @@
  * is_archive(): Kiểm tra có phải đang ở trang archive.php ko. Nếu đúng trả về giá trị 1.
  * 
  * $query->is_main_query(): Khi gặp câu Query nằm trong vùng chạy chính thì mới xử lý bằng cách thêm vào 
- *                           post_type và post_type bao gồm 2 giá trị ('post', 'tproduct'). Nếu không sử dụng
+ *                           post_type và post_type bao gồm 2 giá trị ('post', 'tBook'). Nếu không sử dụng
  *                           có thể ảnh hưởng đến Query ở những vùng khác. Ví dụ như mất menu.
  *  */
 
@@ -41,20 +41,20 @@
                 print_r($wp);
                 echo '</pre>'; */
                 
-                if(isset($wp->query_vars['post_type']) && $wp->query_vars['post_type'] == 'tproduct'){
-                    //echo '<br>' . locate_template('loop-tproduct.php');
-                    $file = TLS_PLUGIN_CUSTOMPOSTS_DIR . 'templates/loop-tproduct.php';
+                if(isset($wp->query_vars['post_type']) && $wp->query_vars['post_type'] == 'tBook'){
+                    //echo '<br>' . locate_template('loop-tBook.php');
+                    $file = TLS_PLUGIN_CUSTOMPOSTS_DIR . 'templates/loop-tBook.php';
                     if(file_exists($file)){
-                        $template_file = $file; //Kiểm tra file loop-tproduct.php có tồn tại ko, nếu ko sẽ chạy file loop-single.php
+                        $template_file = $file; //Kiểm tra file loop-tBook.php có tồn tại ko, nếu ko sẽ chạy file loop-single.php
                     }
                 }
             }
             
             if(is_archive()){
-                if(isset($wp->query_vars['post_type']) && $wp->query_vars['post_type'] == 'tproduct'){
-                    $file = TLS_PLUGIN_CUSTOMPOSTS_DIR . 'templates/list-tproduct.php';
+                if(isset($wp->query_vars['post_type']) && $wp->query_vars['post_type'] == 'tBook'){
+                    $file = TLS_PLUGIN_CUSTOMPOSTS_DIR . 'templates/list-tBook.php';
                     if(file_exists($file)){
-                        $template_file = $file; //Kiểm tra file list-tproduct.php có tồn tại ko, nếu ko sẽ chạy file loop-single.php
+                        $template_file = $file; //Kiểm tra file list-tBook.php có tồn tại ko, nếu ko sẽ chạy file loop-single.php
                     }
                 }
             }
@@ -64,7 +64,7 @@
         
         public function showHome($query){
             if(is_home() && $query->is_main_query()){
-                $query->set('post_type', array('post', 'tproduct')); // Hiển thị cả post và tproduct trên Home
+                $query->set('post_type', array('post', 'tBook')); // Hiển thị cả post và tBook trên Home
             }
             
             return $query;
@@ -72,17 +72,17 @@
         
         public function create() {
             $labels = array(
-                'name'                  => __('Products'),
-                'singular_name'         => __('Product'),
-                'menu_name'             => __('TProduct'),
-                'name_admin_bar'        => __('TProduct'),
-                'add_new'               => __('Add TProduct'),
-                'add_new_item'          => __('Add New TProduct'),
-                'search_items'          => __('Search Product'),
-                'not_found'             => __('No product found.'),
-                'not_found_in_trash'    => __('No product found in Trash'),
-                'view_item'             => __('View Product'),
-                'edit_item'             => __('Edit TProduct')
+                'name'                  => __('Books'),
+                'singular_name'         => __('Book'),
+                'menu_name'             => __('TBook'),
+                'name_admin_bar'        => __('TBook'),
+                'add_new'               => __('Add TBook'),
+                'add_new_item'          => __('Add New TBook'),
+                'search_items'          => __('Search Book'),
+                'not_found'             => __('No Book found.'),
+                'not_found_in_trash'    => __('No Book found in Trash'),
+                'view_item'             => __('View Book'),
+                'edit_item'             => __('Edit TBook')
             );
             
             $args = array(
@@ -103,7 +103,7 @@
     // 			'map_meta_cap'          => null,
      			'supports'              => array('title' ,'editor','author','thumbnail','excerpt','trackbacks' ,'custom-fields' ,'comments','revisions' ,'page-attributes','post-formats'),
     // 			'register_meta_box_cb'  => null,
-    // 			'taxonomies'            => array(),
+     			'taxonomies'            => array('book-category'),
      			'has_archive'           => true,
      			'rewrite'               => true,
     // 			'query_var'             => true,
