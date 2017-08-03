@@ -45,6 +45,9 @@ new Tls_Mp_Cp_Product();
 require_once TLS_PLUGIN_TAXXONOMY_DIR . 'book.php';
 new Tls_Mp_CustomTaxonomy_BookCategory();
 
+require_once TLS_PLUGIN_METABOX_DIR . 'taxonomy.php';
+new Tls_Mp_Mb_Taxonomy();
+
 
 /* require_once TLS_PLUGIN_SHORTCODES_DIR . 'main.php';
  new Tls_Mp_Sc_Main(); */
