@@ -14,13 +14,21 @@
         
         public function __construct() {
             //echo '<br>' . __METHOD__;
-            add_action('admin_enqueue_scripts', array($this, 'addCSSFile'));
-            add_action('admin_enqueue_scripts', array($this, 'addJSFile'));
-            add_action('category_add_form_fields', array($this, 'addForm'));
-            add_action('category_edit_form_fields', array($this, 'editForm'));
             
-            add_action('create_category', array($this, 'save'));
-            add_action('edited_category', array($this, 'save'));
+            if (is_admin()){
+                add_action('category_add_form_fields', array($this, 'addForm'));
+                add_action('category_edit_form_fields', array($this, 'editForm'));
+                
+                if (isset($_GET['taxonomy']) && $_GET['taxonomy'] == 'category'){
+                    add_action('admin_enqueue_scripts', array($this, 'addCSSFile'));
+                    add_action('admin_enqueue_scripts', array($this, 'addJSFile'));
+                }
+                
+                add_action('create_category', array($this, 'save'));
+                add_action('edited_category', array($this, 'save'));
+            }else {
+                add_filter('template_include', array($this, 'loadTemplate'));
+            }
         }
         
         public function save($term_id){
@@ -37,6 +45,35 @@
             }
             
             //die();
+        }
+        
+        public function loadTemplate($template_file) {
+            global $wp;
+            global $wp_query;
+            global $tls_mp_mb_taxonomy_category;
+            
+            /* echo '<pre>';
+            print_r($option_name);
+            echo '</pre>';            
+            echo '<br>' . $template_file;
+            echo '<br>' . is_category(); */
+        
+            if(is_category()){
+                $catId = $wp_query->query_vars['cat'];
+                $option_name = $this->_prefix_id . $catId;
+                $option_value = get_option($option_name, array());
+                
+                
+                if(count($option_value) >0){
+                    $tls_mp_mb_taxonomy_category = $option_value;
+                    $file = TLS_PLUGIN_METABOX_DIR . 'templates/category.php';
+                    if(file_exists($file)){
+                        $template_file = $file;
+                    }
+                }
+            }
+        
+            return $template_file;
         }
         
         public function addForm() {
