@@ -1,11 +1,11 @@
 @CHARSET "ISO-8859-1";
 /*
- Theme Name:   Twentyten-child
- Theme URI:    http://zendvn.com/twenty-ten-child/
- Description:  Theme kế thừa từ theme TwentyTen 
+ Theme Name:   Tls Theme
+ Theme URI:    http://zendvn.com/
+ Description:  Theme cho website tin tức 
  Author:       Tien Le
  Author URI:   http://zendvn.com
- Template:     twentyten
+ Template:     tls-theme
  Version:      1.0.0
  License:      GNU General Public License v2 or later
  License URI:  http://www.gnu.org/licenses/gpl-2.0.html
@@ -13,4 +13,3 @@
  Text Domain:  twenty-ten-child
 */
 
-@import url('../twentyten/style.css');
