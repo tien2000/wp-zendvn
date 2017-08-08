@@ -356,26 +356,4 @@
 	</div>
 	<!-- #wrap -->
 
-	<?php get_footer();?>
-	<!-- #footer-wrap -->
-
-	<a href="#" class="site-scroll-top"><span class="fa fa-arrow-up"></span></a>
-	<script type='text/javascript' src='http://localhost/wp-zendvn/wp-content/themes/tls-theme/js/jquery.form.min.js'></script>
-	<script type='text/javascript' src='http://localhost/wp-zendvn/wp-content/themes/tls-theme/js/scripts.js'></script>
-	<script type='text/javascript' src='http://localhost/wp-zendvn/wp-content/themes/tls-theme/js/plugins.js'></script>
-	<script type='text/javascript'>
-		/*           */
-		var wpexLocalize = {
-			"mobileMenuOpen" : "Browse Categories",
-			"mobileMenuClosed" : "Close navigation",
-			"homeSlideshow" : "false",
-			"homeSlideshowSpeed" : "7000",
-			"UsernamePlaceholder" : "Username",
-			"PasswordPlaceholder" : "Password",
-			"enableFitvids" : "true"
-		};
-		/*     */
-	</script>
-	<script type='text/javascript' src='http://localhost/wp-zendvn/wp-content/themes/tls-theme/js/global.js'></script>
-</body>
-</html>
+	<?php get_footer();?>	

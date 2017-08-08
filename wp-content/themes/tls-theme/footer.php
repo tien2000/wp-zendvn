@@ -12,3 +12,9 @@
 		</div>
 		<!-- #footer-bottom -->
 	</footer>
+	<!-- #footer-wrap -->
+
+	<a href="#" class="site-scroll-top"><span class="fa fa-arrow-up"></span></a>
+	<?php wp_footer();?>	
+</body>
+</html>
