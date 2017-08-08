@@ -8,6 +8,12 @@
  * 'widget_init': Hook hiển thị widget cho theme
  *  */
 
+define('TLS_THEME_URL', get_template_directory_uri());
+
+define('TLS_THEME_DIR', get_template_directory());
+define('TLS_THEME_INC_DIR', TLS_THEME_DIR . '/inc/');
+define('TLS_THEME_WIDGETS_DIR', TLS_THEME_INC_DIR . '/widgets/');
+
 /* ============================================================
  * 4. Hiển thị Widget cho Theme
  * ============================================================ */
