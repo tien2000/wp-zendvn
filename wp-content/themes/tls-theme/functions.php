@@ -1,36 +1,34 @@
-<?php 
-/* 
-<meta name='robots' content='noindex,follow' />
-
-<script type='text/javascript' src='http://localhost/wp-zendvn/wp-content/themes/tls-theme/js/jquery/jquery.js'></script>
-<script type='text/javascript' src='http://localhost/wp-zendvn/wp-content/themes/tls-theme/js/jquery/jquery-migrate.min.js'></script>
-
-<script type='text/javascript' src='http://localhost/wp-zendvn/wp-content/themes/tls-theme/js/jquery.form.min.js'></script>
-<script type='text/javascript' src='http://localhost/wp-zendvn/wp-content/themes/tls-theme/js/scripts.js'></script>
-<script type='text/javascript' src='http://localhost/wp-zendvn/wp-content/themes/tls-theme/js/plugins.js'></script>
-<script type='text/javascript'>
-	
-	    var wpexLocalize = {
-		"mobileMenuOpen" : "Browse Categories",
-		"mobileMenuClosed" : "Close navigation",
-		"homeSlideshow" : "false",
-		"homeSlideshowSpeed" : "7000",
-		"UsernamePlaceholder" : "Username",
-		"PasswordPlaceholder" : "Password",
-		"enableFitvids" : "true"
-	}; 
-
-</script>
-<script type='text/javascript' src='http://localhost/wp-zendvn/wp-content/themes/tls-theme/js/global.js'></script>
+<?php
 /* 
  * get_template_directory(): Đường dẫn tuyệt đối đến thư mục chứa theme.
  * get_template_directory_uri(): Đường dẫn(url) đến thư mục theme/
  * 
  * $wp_styles->add_data('tls_theme_ie8', 'conditional', 'IE 8'): Gọi tập tin ie8.css khi trình duyệt là IE 8
+ * 
+ * 'widget_init': Hook hiển thị widget cho theme
  *  */
+
+/* ============================================================
+ * 4. Hiển thị Widget cho Theme
+ * ============================================================ */
+add_action('widgets_init', 'tls_theme_widget_init');
+
+function tls_theme_widget_init(){
+    register_sidebar(array(
+       'name'          => __( 'Primary Widget Area', 'Tls Widget' ),
+	   'id'            => 'primary-widget-area',
+       'description'   => __( 'Right Widget on Website', 'tls Widget' ),
+       'class'         => '',
+	   'before_widget' => '<div id="%1$s" class="sidebar-widget">',
+       'after_widget'  => '</div>',
+       'before_title'  => '<span class="widget-title">',
+       'after_title'   => '</span>'
+    ));
+    
+}
 	
 /* ============================================================
- * 1. Nạp JS vào theme
+ * 3. Nạp JS vào theme
  * ============================================================ */
 add_action('wp_enqueue_scripts', 'tls_theme_register_script');
 	
