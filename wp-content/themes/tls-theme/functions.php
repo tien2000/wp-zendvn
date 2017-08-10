@@ -12,7 +12,19 @@ define('TLS_THEME_URL', get_template_directory_uri());
 
 define('TLS_THEME_DIR', get_template_directory());
 define('TLS_THEME_INC_DIR', TLS_THEME_DIR . '/inc/');
-define('TLS_THEME_WIDGETS_DIR', TLS_THEME_INC_DIR . '/widgets/');
+define('TLS_THEME_WIDGETS_DIR', TLS_THEME_INC_DIR . 'widgets/');
+define('TLS_THEME_WIDGETS_HTML_DIR', TLS_THEME_WIDGETS_DIR . 'html/');
+
+/* ============================================================
+ * 5. Gọi các tập tin
+ * ============================================================ */
+if(!class_exists('TlsHtml') && is_admin()){
+    require_once TLS_THEME_INC_DIR . 'html.php';
+}
+
+
+require_once TLS_THEME_WIDGETS_DIR . 'main.php';
+new Tls_Theme_Wg_Main();
 
 /* ============================================================
  * 4. Hiển thị Widget cho Theme
@@ -25,7 +37,7 @@ function tls_theme_widget_init(){
 	   'id'            => 'primary-widget-area',
        'description'   => __( 'Right Widget on Website', 'tls Widget' ),
        'class'         => '',
-	   'before_widget' => '<div id="%1$s" class="sidebar-widget">',
+	   'before_widget' => '<div id="%1$s" class="sidebar-widget %2$s clr">',
        'after_widget'  => '</div>',
        'before_title'  => '<span class="widget-title">',
        'after_title'   => '</span>'
@@ -92,6 +104,9 @@ function tls_theme_register_style(){
     
     wp_register_style('tls_theme_site', $cssUrl . 'site.css', array(), '1.0');
     wp_enqueue_style('tls_theme_site');
+    
+    wp_register_style('tls_theme_customize', $cssUrl . 'customize.css', array(), '1.0');
+    wp_enqueue_style('tls_theme_customize');
     
     wp_register_style('tls_theme_ie8', $cssUrl . 'ie8.css', array(), '1.0');
     $wp_styles->add_data('tls_theme_ie8', 'conditional', 'IE 8');
