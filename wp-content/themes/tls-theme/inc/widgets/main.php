@@ -9,7 +9,8 @@ class Tls_Theme_Wg_Main{
     public function __construct() {
         $this->_widget_options = array(
             'searchForm'    => true,
-            'social'        => true
+            'social'        => true,
+            'tabs'          => true
         );
         
         foreach ($this->_widget_options as $key => $val){
@@ -27,5 +28,10 @@ class Tls_Theme_Wg_Main{
     public function social() {
         require_once TLS_THEME_WIDGETS_DIR . 'social.php';
         register_widget('Tls_Theme_Widget_Social');
+    }
+    
+    public function tabs() {
+        require_once TLS_THEME_WIDGETS_DIR . 'tabs.php';
+        register_widget('Tls_Theme_Widget_Tabs');
     }
 }
