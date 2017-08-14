@@ -61,32 +61,68 @@
         	<?php endif;?>	
 		<?php endif;?>
 		<?php wp_reset_postdata();?>
+		
+		<!-- wpex-tabs-widget-tab -->		
+		<?php if(!empty($instance['recent_title'])):?>		
+    		<?php 
+    		      $recent_items = ((int)$instance['recent_items']==0)?5:$instance['recent_items'];
+    		      $args = array(
+                		          'post_type'             => 'post',
+        		                  'order'                 => 'DESC',
+        		                  'posts_per_page'        => $recent_items,
+        		                  'post_status'           => 'publish',
+        		                  'ignore_sticky_posts'   => true,
+        		                  'orderby'               =>  'meta_value'
+                		      );
+    		      $wp_query = new WP_Query($args);
+    		      $i = 1;
+    		?>
+    		<?php if($wp_query->have_posts()):?>
+        		<div id="wpex-widget-recent-tab" class="wpex-tabs-widget-tab  clr">
+        			<ul class="clr">
+        			<?php while ($wp_query->have_posts()): $wp_query->the_post();?>
+        				<li class="clr"><a href="<?php the_permalink();?>"
+        					title="<?php the_title();?>"
+        					class="clr"> <img
+        						src="<?php echo $this->get_img_url($wp_query->post->post_content)?>"
+        						alt="<?php the_title();?>" width="100" height="100" /> 
+        						<span class="title strong"><?php echo mb_substr(get_the_excerpt(), 0, 50) . '...'?>
+        				</a></li>
+    				<?php endwhile;?>
+        			</ul>
+        		</div>
+        	<?php endif;?>
+		<?php endif;?>
+		<?php wp_reset_postdata();?>
+		
 		<!-- wpex-tabs-widget-tab -->
-		<div id="wpex-widget-recent-tab" class="wpex-tabs-widget-tab  clr">
-			<ul class="clr">
-				<li class="clr"><a href="#"
-					title="Formula 1 Is Boring But The Cars Are Super Awesome"
-					class="clr"> <img
-						src="http://localhost/wp-zendvn/wp-content/themes/tls-theme/files/uploads/2014/02/shutterstock_80791570-100x100.jpg"
-						alt="Formula 1 Is Boring But The Cars Are Super Awesome"
-						width="100" height="100" /> <span class="title strong">Formula 1
-							Is Boring But The Cars Are Super Awesome:</span> Quisque
-						pellentesque fringilla scelerisque. Donec porta urna eu fringilla
-						adipiscing.&hellip;
-				</a></li>
-			</ul>
-		</div>
-		<!-- wpex-tabs-widget-tab -->
-		<div id="wpex-widget-comments-tab" class="wpex-tabs-widget-tab clr">
-			<ul class="clr">
-				<li class="clr"><a href="#" title="Homepage" class="clr"> <img
-						src='http://localhost/wp-zendvn/wp-content/themes/tls-theme/files/avatar/1c292955bf55ec6172964107fd325638.png'
-						class="avatar avatar-100 photo" /> <span class="title strong">AJ
-							Clarke:</span> Aenean ut blandit lorem. Nullam ut ultrices nulla,
-						non tristique&hellip;&hellip;
-				</a></li>
-			</ul>
-		</div>
+		<?php if(!empty($instance['comment_title'])):?>	
+    		<?php
+    		      $comment_items = ((int)$instance['comment_items']==0)?5:$instance['comment_items'];
+    		      $args = array(
+            		          'order'     => 'DESC',
+    		                  'status'    => 'approve',
+    		                  'number'    => $comment_items,
+    		          
+            		      );
+    		      $comment_query = new WP_Comment_Query();
+    		      $result_comment = $comment_query->query($args);
+    		?>
+    		<?php if(count($result_comment) > 0)?>
+        		<div id="wpex-widget-comments-tab" class="wpex-tabs-widget-tab clr">
+        			<ul class="clr">
+        			<?php foreach ($result_comment as $comment):?>
+						<li class="clr">
+							<a href="<?php echo get_permalink($comment->comment_post_id);?>" title="Homepage" class="clr"> 
+								<img src='<?php echo get_avatar_url($comment->user_id, '96');?>' class="avatar avatar-100 photo" />								 
+								<span class="title strong"><?php echo $comment->comment_author;?>:</span> <?php echo mb_substr($comment->comment_content, 0, 50) . '...';?>
+        					</a>
+        				</li>
+				<?php endforeach;?>
+        			</ul>
+        		</div>
+			<?php endif;?>
+		<?php wp_reset_postdata();?>
 		<!-- .wpex-tabs-widget-tab -->
 	</div>
 	<!-- .wpex-tabs-widget-inner -->
