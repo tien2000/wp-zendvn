@@ -1,4 +1,8 @@
 <?php
+/* 
+ * get_theme_support('post-formats'): In ra những Format đã định add bên functions.php (trong hàm tlsThemePostFormat())
+ *  */
+
 class Tls_Theme_Widget_Sliders extends WP_Widget {
 
 	//private $_cache_name = 'tls_mp_wg_last_post_caching';
@@ -15,11 +19,12 @@ class Tls_Theme_Widget_Sliders extends WP_Widget {
 
 	}	
 	public function widget( $args, $instance ) {
-		//echo '<br/>' . __METHOD__;
-		
+	    $showFlag = false;	    
+				
 		/* echo '<pre>';
 		print_r($instance);
 		echo '</pre>'; */
+		
 		extract($args);
 		$title 			= apply_filters('widget_title', $instance['title']);
 		$title 			= (empty($title))? translate('Last Post'): $title;
@@ -29,81 +34,71 @@ class Tls_Theme_Widget_Sliders extends WP_Widget {
 		$items 			= (empty($instance['items']))? 5: $instance['items'];	
 		$show_type 		= (empty($instance['show_type']))? 'sidebar': $instance['show_type'];
 		$position 		= (empty($instance['position']))? 'all': $instance['position'];
-		$feature 		= (empty($instance['feature']))? 0: $instance['feature'];
-		$width 			= (empty($instance['width']))? 100: $instance['width'];
-		$height 		= (empty($instance['height']))? 100: $instance['height'];
+		$feature		= (empty($instance['feature']))? 0: $instance['feature'];
 		
-		$showFlag = false;
 		
-		if($position == 'all'){
-			$showFlag = true;
-		}else if($position == 'is_home' && is_home() == true ){
-			$showFlag = true;
-		}else if($position == 'is_category' && is_category() == true){
-			$showFlag = true;
-		}
+		if ($position == 'all') { $showFlag = true; }
+		else if ($position == 'is_home' && is_home() == true) { $showFlag = true; }
+		else if ($position == "is_category" && is_category() == true) { $showFlag = true; }
 				
 		if($showFlag == true){
-
-			echo $before_widget;
-			if(!empty($title)){
-				if($show_type != 'top_content' && $show_type != 'bottom_content'){
-					echo $before_title . $title . $after_title;
-				}
-			}
-			
-			$args = array(
-						'post_type' 			=> 'post',
-						'orderby' 				=> 'ID',
-						'order'					=> 'DESC',
-						'posts_per_page' 		=> $items,
-						'post_status' 			=>'publish',
-						'ignore_sticky_posts' 	=> true
-					);
-			
-			if($cat != 0){
-				if($type == 'only'){
-					$args['category__in'] = array($cat);
-				}else{
-					$args['cat'] = $cat;
-				}
-			}
-			
-			if($feature == 1){
-				$meta_query = array(
-							array(
-									'key'=>'_thumbnail_id'
-								)
-						);
-				$args['meta_query'] = $meta_query;
-			}
-			
-			if($post_format != 'standard'){
-				$tax_query = array(
-							array(
-									'field' => 'slug',
-									'terms'=>'post-format-'	. $post_format,
-									'taxonomy' => 'post_format',
-									'operator' => 'IN'
-								)
-						);
-				$args['tax_query'] = $tax_query;
-			}
-			
-			$wpQuery = new WP_Query($args);
-			
-			if($show_type == 'sidebar' ){
-				require TLS_THEME_WIDGET_DIR . '/html/sidebar.php';
-			}else if($show_type == 'top_content'){
-				require TLS_THEME_WIDGET_DIR . '/html/top_content.php';
-			}else if($show_type == 'bottom_content'){
-				require TLS_THEME_WIDGET_DIR . '/html/bottom_content.php';
-			}
-			wp_reset_postdata();
-			
-			echo $after_widget;
+		    echo $before_widget;
+    		    if(!empty($title)){
+    		        if($show_type != 'top_content' && $show_type != 'bottom_content'){
+    		            echo $before_title . $title . $after_title;
+    		        }
+		            
+    		        $args = array(
+    		            'post_type'           =>  'post',
+    		            'orderby'             =>  'ID',
+    		            'order'               =>  'DESC',
+    		            'post_per_page'       =>  $items,
+    		            'post_status'         =>  'publish',
+    		            'ignore_sticky_posts' =>  true
+    		        );
+    		        
+    		        if($cat != 0){
+    		            if($type == 'only'){
+    		                $args['category__in'] = array($cat);
+    		            }else{
+    		                $args['cat'] = $cat;
+    		            }
+    		        }
+    		        
+    		        if($feature == 1){
+    		            $meta_query = array(
+    		                array(
+    		                    'key'    => '_thumbnail_id'
+    		                )
+    		            );
+    		            $args['meta_query'] = $meta_query;
+    		        }
+    		        
+    		        if($post_format != 'standard'){
+    		            $tax_query = array(
+                		                array(
+                		                    'field'       =>  'slug',
+                		                    'terms'       =>  'post-format-' . $post_format,
+                		                    'taxonomy'    =>  'post_format',
+                		                    'operator'    =>  'IN',
+                		                )
+                		            );
+    		            $args['tax_query'] = $tax_query;
+    		        }
+    		        
+    		        $wp_query = new WP_Query($args);
+    		        
+    		        // Sử dụng the_loop để in ra các giá trị
+    		        if($show_type == 'sidebar'){
+    		            require_once TLS_THEME_WIDGETS_HTML_DIR . 'sidebar.php';
+    		        }else if($show_type == 'top_content'){
+    		            require_once TLS_THEME_WIDGETS_HTML_DIR . 'top_content.php';
+    		        }else if($show_type == 'bottom_content'){
+    		            require_once TLS_THEME_WIDGETS_HTML_DIR . 'bottom_content.php';
+    		        }
+    		    }
+		    echo $after_widget;
 		}
-		
 	}
 	
 	public function update( $new_instance, $old_instance ) {
@@ -127,9 +122,9 @@ class Tls_Theme_Widget_Sliders extends WP_Widget {
 	
 	public function form( $instance ) {
 	
-		/* echo '<pre>';
+		echo '<pre>';
 		 print_r($instance);
-		echo '</pre>'; */ 
+		echo '</pre>'; 
 		$htmlObj =  new TlsHtml();
 			
 		//Tao phan tu chua Title
@@ -185,19 +180,18 @@ class Tls_Theme_Widget_Sliders extends WP_Widget {
 					.	$htmlObj->selectbox($inputName,$inputValue,$arr,$options);
 		echo $htmlObj->pTag($html);
 		
-		
-		//Tao phan tu chua Featured Image
+		//Tao phan tu chua Featured Images
 		$inputID 	= $this->get_field_id('feature');
 		$inputName 	= $this->get_field_name('feature');
 		$inputValue = 1;
-		//$inputValue = @$instance['type'];
+		//$inputValue = @$instance['feature'];
 		$arr 		= array('class' =>'widefat','id' => $inputID);
 		$options['current_value'] = @$instance['feature'];
-		
-		$html		= $htmlObj->label(translate('Show only Feature Image Posts'),array('for'=>$inputID))
-						. '<br/>' .	$htmlObj->checkbox($inputName,$inputValue,$arr,$options)
-						. translate('Yes');
+		$html		= $htmlObj->label(translate('Show only Featured Images Posts'),array('for'=>$inputID))
+		              . '<br/>' .	$htmlObj->checkbox($inputName,$inputValue,$arr,$options)
+		              . translate(' Yes');
 		echo $htmlObj->pTag($html);
+		
 		
 		//Tao phan tu chua Post Format
 		$inputID 	= $this->get_field_id('post_format');
@@ -205,10 +199,15 @@ class Tls_Theme_Widget_Sliders extends WP_Widget {
 		$inputValue = @$instance['post_format'];
 		$arr 		= array('class' =>'widefat','id' => $inputID);
 		$tmp 		= get_theme_support('post-formats');		
+		
+		/* echo '<pre>';
+		print_r($tmp);
+		echo '</pre>'; */
+		
 		$tmp 		= $tmp[0];
 		
 		$options['data'] = array(
-				'standard' => 'Standard'
+	           'standard' => 'Standard',
 		);
 		for($i=0; $i< count($tmp); $i++){
 				//echo '<br>' . $tmp[$i];

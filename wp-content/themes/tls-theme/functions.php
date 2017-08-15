@@ -55,7 +55,7 @@ add_action('after_setup_theme', 'tlsThemePostFormat');
 
 function tlsThemePostFormat(){
     // array( 'aside', 'gallery', 'link', 'image', 'quote', 'status', 'video', 'audio', 'chat' )
-    add_theme_support( 'post-formats', array('gallery', 'video', 'audio', 'abcde') );
+    add_theme_support( 'post-formats', array('aside', 'image', 'gallery', 'video', 'audio') );
     add_theme_support( 'post-thumbnails' );
 }
 
