@@ -108,20 +108,22 @@
     		      $comment_query = new WP_Comment_Query();
     		      $result_comment = $comment_query->query($args);
     		?>
-    		<?php if(count($result_comment) > 0)?>
+    		<?php if(count($result_comment) > 0):?>
         		<div id="wpex-widget-comments-tab" class="wpex-tabs-widget-tab clr">
         			<ul class="clr">
-        			<?php foreach ($result_comment as $comment):?>
-						<li class="clr">
-							<a href="<?php echo get_permalink($comment->comment_post_id);?>" title="Homepage" class="clr"> 
-								<img src='<?php echo get_avatar_url($comment->user_id, '96');?>' class="avatar avatar-100 photo" />								 
-								<span class="title strong"><?php echo $comment->comment_author;?>:</span> <?php echo mb_substr($comment->comment_content, 0, 50) . '...';?>
-        					</a>
-        				</li>
-				<?php endforeach;?>
+            			<?php foreach ($result_comment as $comment):?>
+    						<li class="clr">
+    							<a href="<?php echo get_permalink($comment->comment_post_id);?>" title="Homepage" class="clr"> 
+    								<img src='<?php echo get_avatar_url($comment->user_id, '100');?>' class="avatar avatar-100 photo" />								 
+    								<span class="title strong"><?php echo $comment->comment_author;?>:</span> 
+    								<?php echo mb_substr($comment->comment_content, 0, 50) . '...';?>
+            					</a>
+            				</li>
+    					<?php endforeach;?>
         			</ul>
         		</div>
 			<?php endif;?>
+		<?php endif;?>
 		<?php wp_reset_postdata();?>
 		<!-- .wpex-tabs-widget-tab -->
 	</div>

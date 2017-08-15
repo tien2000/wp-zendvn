@@ -10,7 +10,8 @@ class Tls_Theme_Wg_Main{
         $this->_widget_options = array(
             'searchForm'    => true,
             'social'        => true,
-            'tabs'          => true
+            'tabs'          => true,
+            'sliders'       => true,
         );
         
         foreach ($this->_widget_options as $key => $val){
@@ -18,6 +19,11 @@ class Tls_Theme_Wg_Main{
                 add_action('widgets_init', array($this, $key));
             }
         }
+    }
+    
+    public function sliders() {
+        require_once TLS_THEME_WIDGETS_DIR . 'sliders.php';
+        register_widget('Tls_Theme_Widget_Sliders');
     }
     
     public function searchForm() {

@@ -6,6 +6,9 @@
  * $wp_styles->add_data('tls_theme_ie8', 'conditional', 'IE 8'): Gọi tập tin ie8.css khi trình duyệt là IE 8
  * 
  * 'widget_init': Hook hiển thị widget cho theme
+ * 'after_setup_theme': Hook thêm hỗ trợ cho theme.
+ * add_theme_support( 'post-formats', array() ): Khai báo cho phần Format trong Post/Page.
+ * add_theme_support( 'post-thumbnails' ): Khai báo phần Featured Image trong Post/Page.
  *  */
 
 define('TLS_THEME_URL', get_template_directory_uri());
@@ -44,6 +47,18 @@ function tls_theme_widget_init(){
     ));
     
 }
+
+/* ============================================================
+ * 3. Nạp JS vào theme
+ * ============================================================ */
+add_action('after_setup_theme', 'tlsThemePostFormat');
+
+function tlsThemePostFormat(){
+    // array( 'aside', 'gallery', 'link', 'image', 'quote', 'status', 'video', 'audio', 'chat' )
+    add_theme_support( 'post-formats', array('gallery', 'video', 'audio', 'abcde') );
+    add_theme_support( 'post-thumbnails' );
+}
+
 	
 /* ============================================================
  * 3. Nạp JS vào theme
