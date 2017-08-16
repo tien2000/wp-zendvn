@@ -29,33 +29,32 @@
 		</div>
 		<!-- .wpex-tabs-widget-tabs -->
 		<?php if(!empty($instance['popular_title'])):?>
-		<?php 
-		      $meta_key = 'tls_post_views_count';
-		      $popular_items = ((int)$instance['popular_items']==0)?5:$instance['popular_items'];
-		      $args = array(
-            		          'post_type'             => 'post',
-    		                  'order'                 => 'DESC',
-    		                  'posts_per_page'        => $popular_items,
-    		                  'post_status'           => 'publish',
-    		                  'ignore_sticky_posts'   => true,
-    		                  'meta_key'              => $meta_key,
-    		                  'orderby'               =>  'meta_value'
-            		      );
-		      $wp_query = new WP_Query($args);
-		      $i = 1;
-		?>
+    		<?php 
+    		      $meta_key = 'tls_post_views_count';
+    		      $popular_items = ((int)$instance['popular_items']==0)?5:$instance['popular_items'];
+    		      $args = array(
+                		          'post_type'             => 'post',
+        		                  'order'                 => 'DESC',
+        		                  'posts_per_page'        => $popular_items,
+        		                  'post_status'           => 'publish',
+        		                  'ignore_sticky_posts'   => true,
+        		                  'meta_key'              => $meta_key,
+        		                  'orderby'               => 'meta_value'
+                		      );
+    		      $wp_query = new WP_Query($args);
+    		      $i = 1;
+    		?>
     		<?php if($wp_query->have_posts()):?>
-        		<div id="wpex-widget-popular-tab"
-        			class="wpex-tabs-widget-tab active-tab clr">
+        		<div id="wpex-widget-popular-tab" class="wpex-tabs-widget-tab active-tab clr">
         			<ul class="clr">
         				<?php while ($wp_query->have_posts()): $wp_query->the_post();?>
-						<li class="clr">
-							<a href="<?php the_permalink();?>" title="<?php the_title();?>" class="clr">
-								<span class="counter"><?php echo $i; $i++;?></span> <span class="title strong"><?php the_title();?></span> 
-            						<?php echo mb_substr(get_the_excerpt(), 0, 50) . '...'?>
-            				</a>
-            			</li>
-				<?php endwhile;?>
+    						<li class="clr">
+    							<a href="<?php the_permalink();?>" title="<?php the_title();?>" class="clr">
+    								<span class="counter"><?php echo $i; $i++;?></span> <span class="title strong"><?php the_title();?></span> 
+                						<?php echo mb_substr(get_the_excerpt(), 0, 50) . '...'?>
+                				</a>
+                			</li>
+						<?php endwhile;?>
         			</ul>
         		</div>
         	<?php endif;?>	
@@ -84,7 +83,7 @@
         				<li class="clr"><a href="<?php the_permalink();?>"
         					title="<?php the_title();?>"
         					class="clr"> <img
-        						src="<?php echo $this->get_img_url($wp_query->post->post_content)?>"
+        						src="<?php echo $this->get_img_url($wp_query->post->post_content);?>"
         						alt="<?php the_title();?>" width="100" height="100" /> 
         						<span class="title strong"><?php echo mb_substr(get_the_excerpt(), 0, 50) . '...'?>
         				</a></li>

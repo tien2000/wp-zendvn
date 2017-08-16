@@ -35,6 +35,8 @@ class Tls_Theme_Widget_Sliders extends WP_Widget {
 		$show_type 		= (empty($instance['show_type']))? 'sidebar': $instance['show_type'];
 		$position 		= (empty($instance['position']))? 'all': $instance['position'];
 		$feature		= (empty($instance['feature']))? 0: $instance['feature'];
+		$width		    = (empty($instance['width']))? 100: $instance['width'];
+		$height		    = (empty($instance['height']))? 100: $instance['height'];
 		
 		
 		if ($position == 'all') { $showFlag = true; }
@@ -121,11 +123,10 @@ class Tls_Theme_Widget_Sliders extends WP_Widget {
 	}
 	
 	public function form( $instance ) {
-	
-		echo '<pre>';
-		 print_r($instance);
-		echo '</pre>'; 
-		$htmlObj =  new TlsHtml();
+	    $htmlObj =  new TlsHtml();
+		/* echo '<pre>';
+		print_r($instance);
+		echo '</pre>';  */
 			
 		//Tao phan tu chua Title
 		$inputID 	= $this->get_field_id('title');
@@ -289,8 +290,8 @@ class Tls_Theme_Widget_Sliders extends WP_Widget {
 		return $image;
 	}
 	
-	private function get_new_img_url($imgUrl, $width = 0, $heigt = 0 ,	$suffixes = '-tls-slider-'){
-		$suffixes = $suffixes . $width . 'x'. $heigt;
+	private function get_new_img_url($imgUrl, $width = 0, $height = 0 ,	$suffixes = '-tls-slider-'){
+		$suffixes = $suffixes . $width . 'x'. $height;
 	
 		//Lay ten tap tin hinh anh hien tai
 		preg_match("/[^\/|\\\]+$/", $imgUrl, $currentName);
@@ -310,7 +311,7 @@ class Tls_Theme_Widget_Sliders extends WP_Widget {
 		if(!file_exists($newImgDir)){			
 			$wpImageEditor =  wp_get_image_editor( $imgDir);
 			if ( ! is_wp_error( $wpImageEditor ) ) {
-				$wpImageEditor->resize($width, $heigt, array('center','center'));
+				$wpImageEditor->resize($width, $height, array('center','center'));
 				$wpImageEditor->save( $newImgDir);
 			}
 		}
