@@ -44,8 +44,18 @@ function tls_theme_widget_init(){
        'after_widget'  => '</div>',
        'before_title'  => '<span class="widget-title">',
        'after_title'   => '</span>'
-    ));
+    ));    
     
+    register_sidebar(array(
+        'name'          => __( 'Top Content Area', 'Tls Widget' ),
+        'id'            => 'top-content-widget-area',
+        'description'   => __( 'Top Widget on Website', 'tls Widget' ),
+        'class'         => '',
+        'before_widget' => '<div id="%1$s" class="%2$s">',
+        'after_widget'  => '</div>',
+        'before_title'  => '',
+        'after_title'   => ''
+    ));
 }
 
 /* ============================================================
