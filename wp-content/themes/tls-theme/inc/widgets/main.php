@@ -12,6 +12,7 @@ class Tls_Theme_Wg_Main{
             'social'        => true,
             'tabs'          => true,
             'sliders'       => true,
+            'lastPost'      => true,
         );
         
         foreach ($this->_widget_options as $key => $val){
@@ -19,6 +20,11 @@ class Tls_Theme_Wg_Main{
                 add_action('widgets_init', array($this, $key));
             }
         }
+    }
+    
+    public function lastPost() {
+        require_once TLS_THEME_WIDGETS_DIR . 'last_post.php';
+        register_widget('Tls_Theme_Widget_LastPost');
     }
     
     public function sliders() {

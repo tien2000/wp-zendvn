@@ -64,8 +64,52 @@ function tls_theme_widget_init(){
         'class'         => '',
         'before_widget' => '<div id="%1$s" class="%2$s">',
         'after_widget'  => '</div>',
-        'before_title'  => '<h2 class="heading">',
-        'after_title'   => '</h2>'
+        'before_title'  => '',
+        'after_title'   => ''
+    ));
+    
+    register_sidebar(array(
+        'name'          => __( 'Before Footer area 1', 'Tls Widget' ),
+        'id'            => 'before-footer-area-1',
+        'description'   => __( 'Before Footer area 1 on Website', 'tls Widget' ),
+        'class'         => '',
+        'before_widget' => '<div id="%1$s" class="footer-widget %2$s clr">',
+        'after_widget'  => '</div>',
+        'before_title'  => '<span class="widget-title">',
+        'after_title'   => '</span>'
+    ));
+    
+    register_sidebar(array(
+        'name'          => __( 'Before Footer area 2', 'Tls Widget' ),
+        'id'            => 'before-footer-area-2',
+        'description'   => __( 'Before Footer area 2 on Website', 'tls Widget' ),
+        'class'         => '',
+        'before_widget' => '<div id="%1$s" class="footer-widget %2$s clr">',
+        'after_widget'  => '</div>',
+        'before_title'  => '<span class="widget-title">',
+        'after_title'   => '</span>'
+    ));
+    
+    register_sidebar(array(
+        'name'          => __( 'Before Footer area 3', 'Tls Widget' ),
+        'id'            => 'before-footer-area-3',
+        'description'   => __( 'Before Footer area 3 on Website', 'tls Widget' ),
+        'class'         => '',
+        'before_widget' => '<div id="%1$s" class="footer-widget %2$s clr">',
+        'after_widget'  => '</div>',
+        'before_title'  => '<span class="widget-title">',
+        'after_title'   => '</span>'
+    ));
+    
+    register_sidebar(array(
+        'name'          => __( 'Before Footer area 4', 'Tls Widget' ),
+        'id'            => 'before-footer-area-4',
+        'description'   => __( 'Before Footer area 4 on Website', 'tls Widget' ),
+        'class'         => '',
+        'before_widget' => '<div id="%1$s" class="footer-widget %2$s clr">',
+        'after_widget'  => '</div>',
+        'before_title'  => '<span class="widget-title">',
+        'after_title'   => '</span>'
     ));
 }
 
