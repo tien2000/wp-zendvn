@@ -26,8 +26,9 @@ class Tls_Theme_Widget_Social extends WP_Widget {
 			echo $before_title . $title . $after_title;
 		}
 		
-		require_once TLS_THEME_WIDGETS_HTML_DIR . 'social.php';
+		require TLS_THEME_WIDGETS_HTML_DIR . 'social.php';
 		
+		wp_reset_postdata();
 		echo $after_widget;
 	}
 	

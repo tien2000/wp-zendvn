@@ -21,57 +21,54 @@ class Tls_Theme_Widget_LastPost extends WP_Widget {
 		$title 			= (empty($title))? translate('Last Post'): $title;
 		$cat 			= (empty($instance['cat']))? 0: $instance['cat'];
 		$type 			= (empty($instance['type']))? 'only': $instance['type'];
-		$post_format 	= (empty($instance['post_format']))? 'standard': $instance['post_format'];
-		$items 			= (empty($instance['items']))? 5: $instance['items'];	
+		$post_format 	= (empty($instance['post_format']))? 'standard': $instance['post_format'];		
 		$show_type 		= (empty($instance['show_type']))? 'sidebar': $instance['show_type'];
-		$width          = 125;
-		$height         = 71;
+		$items 			= (empty($instance['items']))? 5: $instance['items'];
 				
 		echo $before_widget;
-		if(!empty($title)){
-			echo $before_title . $title . $after_title;
-		}
-		
-		$args = array(
-		    'post_type'           =>  'post',
-		    'orderby'             =>  'ID',
-		    'order'               =>  'DESC',
-		    'post_per_page'       =>  $items,
-		    'post_status'         =>  'publish',
-		    'ignore_sticky_posts' =>  true
-		);
-		
-		if($cat != 0){
-		    if($type == 'only'){
-		        $args['category__in'] = array($cat);
-		    }else{
-		        $args['cat'] = $cat;
-		    }
-		}
-		
-		if($post_format != 'standard'){
-		    $tax_query = array(
-		        array(
-		            'field'       =>  'slug',
-		            'terms'       =>  'post-format-' . $post_format,
-		            'taxonomy'    =>  'post_format',
-		            'operator'    =>  'IN',
-		        )
-		    );
-		    $args['tax_query'] = $tax_query;
-		}
-		
-		$wp_query = new WP_Query($args);
-		
-		// Sử dụng the_loop để in ra các giá trị
-		if($show_type == 'sidebar'){
-		    require_once TLS_THEME_WIDGETS_HTML_DIR . 'last_post_sidebar.php';
-		}else if($show_type == 'last_news'){
-		    require_once TLS_THEME_WIDGETS_HTML_DIR . 'last_post_news.php';
-		}else if($show_type == 'last_gallery'){
-		    require_once TLS_THEME_WIDGETS_HTML_DIR . 'last_post_gallery.php';
-		}
-		
+    		if(!empty($title)){
+    			echo $before_title . $title . $after_title;
+    		}
+    		
+    		$args = array(
+    		    'post_type'           =>  'post',
+    		    'orderby'             =>  'ID',
+    		    'order'               =>  'DESC',
+    		    'posts_per_page'      => $items,
+    		    'post_status'         =>  'publish',
+    		    'ignore_sticky_posts' =>  true
+    		);
+    		
+    		if($cat != 0){
+    		    if($type == 'only'){
+    		        $args['category__in'] = array($cat);
+    		    }else{
+    		        $args['cat'] = $cat;
+    		    }
+    		}
+    		
+    		if($post_format != 'standard'){
+    		    $tax_query = array(
+    		        array(
+    		            'field'       =>  'slug',
+    		            'terms'       =>  'post-format-' . $post_format,
+    		            'taxonomy'    =>  'post_format',
+    		            'operator'    =>  'IN',
+    		        )
+    		    );
+    		    $args['tax_query'] = $tax_query;
+    		}
+    		
+    		$wp_query = new WP_Query($args);    		
+    		
+    		if($show_type == 'sidebar'){
+    		    require TLS_THEME_WIDGETS_HTML_DIR . 'last_post_sidebar.php';
+    		}else if($show_type == 'last_news'){
+    		    require TLS_THEME_WIDGETS_HTML_DIR . 'last_post_news.php';
+    		}else if($show_type == 'last_gallery'){
+    		    require TLS_THEME_WIDGETS_HTML_DIR . 'last_post_gallery.php';
+    		}		
+    		wp_reset_postdata(); // Thoát khỏi vòng lặp (Important!!!)
 		echo $after_widget;
 	}
 	
@@ -90,11 +87,11 @@ class Tls_Theme_Widget_LastPost extends WP_Widget {
 	}
 	
 	public function form( $instance ) {
-	
-		echo '<pre>';
+	    $htmlObj =  new TlsHtml();
+	    
+		/* echo '<pre>';
 		 print_r($instance);
-		echo '</pre>';
-		$htmlObj =  new TlsHtml();
+		echo '</pre>'; */
 			
 		//Tao phan tu chua Title
 		$inputID 	= $this->get_field_id('title');

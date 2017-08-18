@@ -54,7 +54,7 @@ class Tls_Theme_Widget_Sliders extends WP_Widget {
     		            'post_type'           =>  'post',
     		            'orderby'             =>  'ID',
     		            'order'               =>  'DESC',
-    		            'post_per_page'       =>  $items,
+    		            'posts_per_page'      => $items,
     		            'post_status'         =>  'publish',
     		            'ignore_sticky_posts' =>  true
     		        );
@@ -92,13 +92,14 @@ class Tls_Theme_Widget_Sliders extends WP_Widget {
     		        
     		        // Sử dụng the_loop để in ra các giá trị
     		        if($show_type == 'sidebar'){
-    		            require_once TLS_THEME_WIDGETS_HTML_DIR . 'sidebar.php';
+    		            require TLS_THEME_WIDGETS_HTML_DIR . 'sidebar.php';
     		        }else if($show_type == 'top_content'){
-    		            require_once TLS_THEME_WIDGETS_HTML_DIR . 'top_content.php';
+    		            require TLS_THEME_WIDGETS_HTML_DIR . 'top_content.php';
     		        }else if($show_type == 'bottom_content'){
-    		            require_once TLS_THEME_WIDGETS_HTML_DIR . 'bottom_content.php';
+    		            require TLS_THEME_WIDGETS_HTML_DIR . 'bottom_content.php';
     		        }
     		    }
+    		    wp_reset_postdata();
 		    echo $after_widget;
 		}
 	}

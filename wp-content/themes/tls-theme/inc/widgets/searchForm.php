@@ -52,7 +52,8 @@ class Tls_Theme_Wg_SearchForm extends WP_Widget{
     		if(!empty($title)){
     		    echo $before_title . $title . $after_title;
     		}
-    		require_once TLS_THEME_WIDGETS_HTML_DIR . 'searchForm.php';
+    		require TLS_THEME_WIDGETS_HTML_DIR . 'searchForm.php';
+    		wp_reset_postdata();
 		echo $after_widget;
 
 	}

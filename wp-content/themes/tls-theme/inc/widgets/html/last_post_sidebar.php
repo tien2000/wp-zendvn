@@ -3,7 +3,10 @@
  * the_modified_date(); Hiển thị định dạng ngày tháng năm
  *  */
 ?>
-
+<?php 
+    $width          = 125;
+    $height         = 71;
+?>
 <?php if($wp_query->have_posts()):?>
     <ul class="widget-recent-posts clr">
         <?php while ($wp_query->have_posts()): 
