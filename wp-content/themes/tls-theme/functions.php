@@ -9,6 +9,10 @@
  * 'after_setup_theme': Hook thêm hỗ trợ cho theme.
  * add_theme_support( 'post-formats', array() ): Khai báo cho phần Format trong Post/Page.
  * add_theme_support( 'post-thumbnails' ): Khai báo phần Featured Image trong Post/Page.
+ * register_nav_menus(): Khai báo hiển thị menu.
+ * Hook 'walker_nav_menu_start_el': Tương tác vào cặp thẻ <i> trong thẻ <a>
+ * Hook 'nav_menu_css_class': Tương tác vào cặp thẻ <li>
+ * in_array(): Tìm giá trị trong mảng
  *  */
 
 define('TLS_THEME_URL', get_template_directory_uri());
@@ -19,18 +23,85 @@ define('TLS_THEME_WIDGETS_DIR', TLS_THEME_INC_DIR . 'widgets/');
 define('TLS_THEME_WIDGETS_HTML_DIR', TLS_THEME_WIDGETS_DIR . 'html/');
 
 /* ============================================================
+ * 8. Menu - Chỉnh sửa giá trị thuộc tính class trong thẻ <li>
+ * ============================================================ */
+add_filter('nav_menu_css_class', 'tls_theme_nav_css', 10, 4);
+
+function tls_theme_nav_css($classes, $item, $args, $depth){
+    if($args->theme_location == 'top-menu'){
+        $itemClass = $item->classes;
+        if(in_array('menu-item-has-children', $itemClass) && $item->menu_item_parent == 0){
+            /* echo '<pre>';
+            print_r($classes);
+            echo '</pre>'; */
+            $classes[] = 'dropdown';
+        }
+    }
+    return $classes;
+}
+
+/* ============================================================
+ * 7. Menu - Chỉnh sửa giá trị trong cặp thẻ <a>
+ * ============================================================ */
+add_filter('walker_nav_menu_start_el', 'tls_theme_nav_description', 10, 4);
+
+function tls_theme_nav_description($item_output, $item, $depth, $args){
+    // $item_output => Cặp thẻ <a> nằm trong hệ thống Menu.
+    // $item        => Đối tượng WP_Post.
+    // $depth       => Độ sâu của Menu.
+    // $args        => Đối tượng chứa thông tin Menu.
+    
+    if($args->theme_location == 'top-menu'){
+        /* echo '<pre>';
+        print_r($item);
+        echo '</pre>'; */
+        $itemClass = $item->classes;
+        if(in_array('menu-item-has-children', $itemClass) && $item->menu_item_parent == 0){
+            $item_output = str_replace('</a>', '<i class="fa fa-caret-down nav-arrow"></i></a>', $item_output);
+        }
+        if($item->post_title == 'Login'){
+            /* echo '<pre>';
+            print_r($item);
+            echo '</pre>'; */
+            $item_output = str_replace('>Login', '><span class="fa fa-lock"></span>Login', $item_output);
+            if(is_user_logged_in()){
+                $hrefUrl = 'href="'. wp_logout_url() .'"';
+                $item_output = str_replace('>Login<', '>Logout<', $item_output);
+                $item_output = preg_replace('/href="(.*)"/', $hrefUrl, $item_output);
+                $item_output = str_replace('>Logout', '><span class="fa fa-lock"></span>Logout', $item_output);
+            }
+        }
+    }
+    return $item_output;
+}
+
+
+/* ============================================================
+ * 6. Khai báo hệ thống Menu cho Theme.
+ * ============================================================ */
+add_action('init', 'tls_theme_register_menus');
+
+function tls_theme_register_menus(){
+    register_nav_menus(array(
+        'top-menu'      =>  __('Top Menu'),
+        'center-menu'      =>  __('Center Menu'),
+        'bottom-menu'      =>  __('Bottom Menu')
+    ));
+}
+
+
+/* ============================================================
  * 5. Gọi các tập tin
  * ============================================================ */
 if(!class_exists('TlsHtml') && is_admin()){
     require_once TLS_THEME_INC_DIR . 'html.php';
 }
-
-
 require_once TLS_THEME_WIDGETS_DIR . 'main.php';
 new Tls_Theme_Wg_Main();
 
+
 /* ============================================================
- * 4. Hiển thị Widget cho Theme
+ * 4. Khai báo hệ thống Widget cho Theme.
  * ============================================================ */
 add_action('widgets_init', 'tls_theme_widget_init');
 
@@ -113,8 +184,9 @@ function tls_theme_widget_init(){
     ));
 }
 
+
 /* ============================================================
- * 3. Nạp JS vào theme
+ * 3. Khai báo Post Format
  * ============================================================ */
 add_action('after_setup_theme', 'tlsThemePostFormat');
 
@@ -126,10 +198,11 @@ function tlsThemePostFormat(){
 
 	
 /* ============================================================
- * 3. Nạp JS vào theme
+ * 2. Nạp JS vào theme
  * ============================================================ */
 add_action('wp_enqueue_scripts', 'tls_theme_register_script');
-	
+add_action('wp_footer', 'tls_theme_script_code');
+
 function tls_theme_register_script(){
     $jsUrl = get_template_directory_uri() . '/js/';
     
@@ -147,8 +220,6 @@ function tls_theme_register_script(){
     
 }
 
-add_action('wp_footer', 'tls_theme_script_code');
-
 function tls_theme_script_code(){
     echo '<script type=\'text/javascript\'>
     var wpexLocalize = {
@@ -162,6 +233,7 @@ function tls_theme_script_code(){
     };
     </script>';
 }
+
 
 /* ============================================================
  * 1. Nạp CSS vào theme
