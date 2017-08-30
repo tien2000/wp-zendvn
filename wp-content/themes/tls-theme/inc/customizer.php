@@ -7,9 +7,9 @@
  */
 
     $tmp = get_theme_mods();
-    echo '<pre>';
+    /* echo '<pre>';
     print_r($tmp);
-    echo '</pre>';
+    echo '</pre>'; */
         
     //echo get_theme_mod('tls_theme_size_name', '');
     
@@ -33,9 +33,32 @@
             ));
         
     //========================================================
-    // Tạo ô SELECTBOX 2
+    // Tạo ô CATEGORIES LIST CONTROL
     //========================================================
-        $cats = get_categories();
+        $inputName = 'my-cats';
+        $settingID = $sectionID . '[' . $inputName . ']';
+        $wp_customize->add_setting($settingID, array(
+            //'default'       => '#eaeaea',
+            'capability'    => 'edit_theme_options',
+            'type'          => 'theme_mod',
+            'transport'     => 'refresh',
+        ));
+        
+        $controlID = 'tls-theme' . $inputName;
+        $wp_customize->add_control(new WP_Customize_Category_List_Control($wp_customize, $controlID, array(
+            'label'         =>  __('My Categories'),
+            'section'       =>  $sectionID,
+            'settings'      =>  $settingID,
+            'description'   =>  __('Show Categories'),
+            'multiple'      =>  1,
+            'size'          =>  5
+        )));
+        
+        
+    //========================================================
+    // Tạo ô SELECTBOX CATEGORY
+    //========================================================
+         $cats = get_categories();
         /* echo '<pre>';
         print_r($cats);
         echo '</pre>'; */
@@ -60,14 +83,15 @@
             'transport'     => 'refresh',            
         ));
         
-        $controlID = 'tls-theme' . $inputName;
+        /* $controlID = 'tls-theme' . $inputName;
         $wp_customize->add_control($controlID, array(
             'label'         =>  __('Select Category'),
             'section'       =>  $sectionID,
             'settings'      =>  $settingID,
             'type'          =>  'select',
-            'choices'       =>  $catData
-        ));
+            'choices'       =>  $catData,
+            'description'   =>  __('Show Categories')
+        )); */
         
         
     //========================================================

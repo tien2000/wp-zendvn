@@ -20,6 +20,8 @@ define('TLS_THEME_URL', get_template_directory_uri());
 define('TLS_THEME_DIR', get_template_directory());
 define('TLS_THEME_INC_DIR', TLS_THEME_DIR . '/inc/');
 define('TLS_THEME_WIDGETS_DIR', TLS_THEME_INC_DIR . 'widgets/');
+define('TLS_THEME_CONTROLS_DIR', TLS_THEME_INC_DIR . 'controls/');
+
 define('TLS_THEME_WIDGETS_HTML_DIR', TLS_THEME_WIDGETS_DIR . 'html/');
 
 /* ============================================================
@@ -32,6 +34,8 @@ require_once TLS_THEME_WIDGETS_DIR . 'main.php';
 new Tls_Theme_Wg_Main();
 
 require_once TLS_THEME_INC_DIR . 'customizer.php';
+
+require TLS_THEME_CONTROLS_DIR . 'category_listbox.php';
 
 /* ============================================================
  * 7. Menu - Chỉnh sửa giá trị thuộc tính class trong thẻ <li>
