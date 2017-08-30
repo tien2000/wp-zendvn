@@ -23,7 +23,18 @@ define('TLS_THEME_WIDGETS_DIR', TLS_THEME_INC_DIR . 'widgets/');
 define('TLS_THEME_WIDGETS_HTML_DIR', TLS_THEME_WIDGETS_DIR . 'html/');
 
 /* ============================================================
- * 8. Menu - Chỉnh sửa giá trị thuộc tính class trong thẻ <li>
+ * Gọi các tập tin
+ * ============================================================ */
+if(!class_exists('TlsHtml') && is_admin()){
+    require_once TLS_THEME_INC_DIR . 'html.php';
+}
+require_once TLS_THEME_WIDGETS_DIR . 'main.php';
+new Tls_Theme_Wg_Main();
+
+require_once TLS_THEME_INC_DIR . 'customizer.php';
+
+/* ============================================================
+ * 7. Menu - Chỉnh sửa giá trị thuộc tính class trong thẻ <li>
  * ============================================================ */
 add_filter('nav_menu_css_class', 'tls_theme_nav_css', 10, 4);
 
@@ -41,7 +52,7 @@ function tls_theme_nav_css($classes, $item, $args, $depth){
 }
 
 /* ============================================================
- * 7. Menu - Chỉnh sửa giá trị trong cặp thẻ <a>
+ * 6. Menu - Chỉnh sửa giá trị trong cặp thẻ <a>
  * ============================================================ */
 add_filter('walker_nav_menu_start_el', 'tls_theme_nav_description', 10, 4);
 
@@ -77,7 +88,7 @@ function tls_theme_nav_description($item_output, $item, $depth, $args){
 
 
 /* ============================================================
- * 6. Khai báo hệ thống Menu cho Theme.
+ * 5. Khai báo hệ thống Menu cho Theme.
  * ============================================================ */
 add_action('init', 'tls_theme_register_menus');
 
@@ -88,16 +99,6 @@ function tls_theme_register_menus(){
         'bottom-menu'      =>  __('Bottom Menu')
     ));
 }
-
-
-/* ============================================================
- * 5. Gọi các tập tin
- * ============================================================ */
-if(!class_exists('TlsHtml') && is_admin()){
-    require_once TLS_THEME_INC_DIR . 'html.php';
-}
-require_once TLS_THEME_WIDGETS_DIR . 'main.php';
-new Tls_Theme_Wg_Main();
 
 
 /* ============================================================
