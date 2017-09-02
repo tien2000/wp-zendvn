@@ -113,7 +113,7 @@ class Tls_Mp_Count_Views{
 	
 
 	public function add_css_file(){
-		wp_register_style('tls_mp_post_cols', TLS_MP_CSS_URL . '/post_cols.css', array(),'1.0');
+		wp_register_style('tls_mp_post_cols', TLS_PLUGIN_CSS_URL . '/post_cols.css', array(),'1.0');
 		wp_enqueue_style('tls_mp_post_cols');
 	}
 	
