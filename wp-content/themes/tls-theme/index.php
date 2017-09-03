@@ -337,9 +337,11 @@
 						<?php require_once TLS_THEME_INC_DIR . 'bottom-content.php';?>
 						<!-- .featured-carousel-wrap -->
 						<div class="ad-spot home-bottom-ad clr">
-							<a href="#" title="Ad">
-								<img src="http://localhost/wp-zendvn/wp-content/themes/tls-theme/images/ad-620x80.png" alt="Ad" />
-							</a>
+    						<?php 
+        					   global $tlsCustomize;
+        					   echo $tlsCustomize->ads_section('content-banner');
+        					?>
+							<!-- <a href="#" title="Ad"><img src="http://localhost/wp-zendvn/wp-content/themes/tls-theme/images/ad-620x80.png" alt="Ad" /></a> -->
 						</div>
 						<!-- .ad-spot -->
 					</div>

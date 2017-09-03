@@ -18,6 +18,7 @@
 define('TLS_THEME_URL', get_template_directory_uri());
 define('TLS_THEME_CSS_URL', TLS_THEME_URL . '/css/');
 define('TLS_THEME_JS_URL', TLS_THEME_URL . '/js/');
+define('TLS_THEME_IMAGE_URL', TLS_THEME_URL . '/images/');
 
 define('TLS_THEME_DIR', get_template_directory());
 define('TLS_THEME_INC_DIR', TLS_THEME_DIR . '/inc/');
@@ -32,11 +33,15 @@ define('TLS_THEME_WIDGETS_HTML_DIR', TLS_THEME_WIDGETS_DIR . 'html/');
 if(!class_exists('TlsHtml') && is_admin()){
     require_once TLS_THEME_INC_DIR . 'html.php';
 }
+
 require_once TLS_THEME_WIDGETS_DIR . 'main.php';
 new Tls_Theme_Wg_Main();
 
 require_once TLS_THEME_INC_DIR . 'customizer.php';
+
+global $tlsCustomize;
 $tlsCustomize = new Tls_Theme_Customize_Control();
+//$tlsCustomize->ads_section();
 
 //require TLS_THEME_CONTROLS_DIR . 'category_listbox.php';
 

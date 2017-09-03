@@ -69,7 +69,11 @@
 				</div>
 				<!-- .site-branding -->
 				<div class="ad-spot header-ad clr">
-					<a href="#" title="Ad"><img src="http://localhost/wp-zendvn/wp-content/themes/tls-theme/images/ad-620x80.png" alt="Ad" /></a>
+					<?php 
+					   global $tlsCustomize;
+					   echo $tlsCustomize->ads_section('top-banner');
+					?>
+					<!-- <a href="#" title="Ad"><img src="http://localhost/wp-zendvn/wp-content/themes/tls-theme/images/ad-620x80.png" alt="Ad" /></a> -->
 				</div>
 				<!-- .ad-spot -->
 			</header>

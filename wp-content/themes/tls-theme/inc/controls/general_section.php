@@ -22,7 +22,7 @@
         }
         
         public function css(){
-            $options = $this->_theme_mods['tls_theme_general'];
+            $options = @$this->_theme_mods['tls_theme_general'];
             //echo '<br>' . __METHOD__;            
             echo '<pre>';
             print_r($options);
