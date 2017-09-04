@@ -14,14 +14,16 @@
             //echo __METHOD__;
             
             $options = array(
-                'general'      => false,  
+                'general'      => true,  
                 'ads'          => true,
+                'menu_color'   => true,
             );
             
             $this->_theme_mods = get_theme_mods();
             
-            if($options['general'] == true) $this->general();
-            if($options['ads'] == true)     $this->ads();
+            if($options['general'] == true)         $this->general();
+            if($options['ads'] == true)             $this->ads();
+            if($options['menu_color'] == true)      $this->menu_color();
             
         }
         
@@ -33,6 +35,11 @@
         public function ads() {
             require_once TLS_THEME_CONTROLS_DIR . 'ads_section.php';
             new Tls_Theme_Ads_Section($this->_theme_mods);
+        }
+        
+        public function menu_color() {
+            require_once TLS_THEME_CONTROLS_DIR . 'menu_section.php';
+            new Tls_Theme_Menu_Color_Section($this->_theme_mods);
         }
         
         public function ads_section($val = ''){

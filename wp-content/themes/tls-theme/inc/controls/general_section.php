@@ -24,9 +24,9 @@
         public function css(){
             $options = @$this->_theme_mods['tls_theme_general'];
             //echo '<br>' . __METHOD__;            
-            echo '<pre>';
+            /* echo '<pre>';
             print_r($options);
-            echo '</pre>';
+            echo '</pre>'; */
 ?>
 			<style type="text/css">
                 <?php if($options['date-time'] == 'no'):?>

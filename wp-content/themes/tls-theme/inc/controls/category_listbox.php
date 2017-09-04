@@ -65,17 +65,3 @@ if(class_exists('WP_Customize_Control')){
     }
 }
 ?>
-
-<!-- <label> <span class="customize-control-title">Select Category</span>
-<div class="customize-control-notifications-container" style="">
-		<ul>
-
-		</ul>
-	</div> <select data-customize-setting-link="tls_theme_general[my-categories]">
-		<option value="0">--Select--</option>
-		<option value="3" selected="selected">PHP</option>
-		<option value="4">PHP cơ bản</option>
-		<option value="1">Uncategorized</option>
-		<option value="6">Vòng lặp trong PHP</option>
-</select>
-</label> -->
