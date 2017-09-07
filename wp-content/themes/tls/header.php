@@ -1,5 +1,8 @@
 <!DOCTYPE html>
-    <html <?php language_attributes();?>>
+    <html <?php 
+                language_attributes();
+                global $tlsCustomize;
+            ?>>
 <head>
 	<meta charset="<?php bloginfo('charset');?>">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -56,24 +59,30 @@
 				<div class="site-branding clr">
 					<div id="logo" class="clr">
 						<div class="site-text-logo clr">
-							<h1>
+    						<?php 
+        					   echo $tlsCustomize->general_section('tls_theme_general[site-logo]');
+        					?>
+						
+							<!-- <h1>
 								<a href="#" title="Spartan" rel="home">Spartan</a>
-							</h1>
+							</h1> -->
 						</div>
 					</div>
 					<!-- #logo -->
 					<div id="blog-description" class="clr">
-						Edit your subheading via the theme customizer. <br /> It looks much better when it's 2 lines long.
+						<?php 
+    					   echo $tlsCustomize->general_section('tls_theme_general[site-description]');
+    					?>
+						<!-- Edit your subheading via the theme customizer. <br /> It looks much better when it's 2 lines long. -->
 					</div>
 					<!-- #blog-description -->
 				</div>
 				<!-- .site-branding -->
 				<div class="ad-spot header-ad clr">
 					<?php 
-					   global $tlsCustomize;
 					   echo $tlsCustomize->ads_section('top-banner');
 					?>
-					<!-- <a href="#" title="Ad"><img src="http://localhost/wp-zendvn/wp-content/themes/tls-theme/images/ad-620x80.png" alt="Ad" /></a> -->
+					<!-- <a href="#" title="Ad"><img src="<?php echo TLS_THEME_IMAGE_URL; ?>ad-620x80.png" alt="Ad" /></a> -->
 				</div>
 				<!-- .ad-spot -->
 			</header>

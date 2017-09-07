@@ -211,12 +211,16 @@ function tls_theme_widget_init(){
 /* ============================================================
  * 3. Khai báo Post Format
  * ============================================================ */
-add_action('after_setup_theme', 'tlsThemePostFormat');
+add_action('after_setup_theme', 'tlsThemeSupport');
 
-function tlsThemePostFormat(){
+function tlsThemeSupport(){
     // array( 'aside', 'gallery', 'link', 'image', 'quote', 'status', 'video', 'audio', 'chat' )
     add_theme_support( 'post-formats', array('aside', 'image', 'gallery', 'video', 'audio') );
     add_theme_support( 'post-thumbnails' );
+    /* add_theme_support( 'custom-background' );
+    add_theme_support( 'custom-header' ); */
+    add_theme_support( 'automatic-feed-links' );
+    add_theme_support( 'html5', array('comment-list', 'comment-form', 'search-form', 'gallery', 'caption') );
 }
 
 	

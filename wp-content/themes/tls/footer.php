@@ -1,10 +1,17 @@
+<?php 
+    global $tlsCustomize;
+?>
 <footer id="footer-wrap" class="site-footer clr">
 		<?php require_once TLS_THEME_INC_DIR . 'footer.php';?>
 		<!-- #footer -->
 		<div id="footer-bottom" class="clr">
 			<div class="container clr">
-				<div id="copyright" class="clr" role="contentinfo">Copyright
-					2014 Spartan</div>
+				<div id="copyright" class="clr" role="contentinfo">
+					<?php 
+					   echo $tlsCustomize->general_section('tls_theme_general[site-copyright]');
+					?>
+					<!-- Copyright 2014 Spartan -->
+				</div>
 				<!-- #copyright -->
 				<?php require_once TLS_THEME_INC_DIR . 'bottom-menu.php';?>
 			</div>

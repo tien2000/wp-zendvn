@@ -58,7 +58,7 @@
             $inputName = 'top-banner';
             $settingID = $sectionID . '[' . $inputName . ']';
             $wp_customize->add_setting($settingID, array(
-                'default' 		=> TLS_THEME_IMAGE_URL . '/ad-620x80.png',
+                'default' 		=> TLS_THEME_IMAGE_URL . 'ad-620x80.png',
                 'capability' 	=>'edit_theme_options',
                 'type'			=> 'theme_mod',
                 'transport'		=> 'postMessage',
@@ -99,7 +99,7 @@
             $inputName = 'content-banner';
             $settingID = $sectionID . '[' . $inputName . ']';
             $wp_customize->add_setting($settingID, array(
-                'default' 		=> TLS_THEME_IMAGE_URL . '/ad-620x80.png',
+                'default' 		=> TLS_THEME_IMAGE_URL . 'ad-620x80.png',
                 'capability' 	=>'edit_theme_options',
                 'type'			=> 'theme_mod',
                 'transport'		=> 'postMessage',
@@ -140,7 +140,7 @@
             $inputName = 'banner-in-content';
             $settingID = $sectionID . '[' . $inputName . ']';
             $wp_customize->add_setting($settingID, array(
-                'default' 		=> '<a href="#" title="Total Theme"><img src="http://localhost/wp-zendvn/wp-content/uploads/2017/09/banner_300x250.jpg" alt="Total Theme" /></a>',
+                'default' 		=> '<a href="#" title="Total Theme"><img src="'. TLS_THEME_IMAGE_URL . 'banner_300x250.png' .'" alt="Total Theme" /></a>',
                 'capability' 	=> 'edit_theme_options',
                 'type'			=> 'theme_mod',
                 'transport'		=> 'postMessage',

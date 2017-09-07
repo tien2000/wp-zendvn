@@ -341,7 +341,7 @@
         					   global $tlsCustomize;
         					   echo $tlsCustomize->ads_section('content-banner');
         					?>
-							<!-- <a href="#" title="Ad"><img src="http://localhost/wp-zendvn/wp-content/themes/tls-theme/images/ad-620x80.png" alt="Ad" /></a> -->
+							<!-- <a href="#" title="Ad"><img src="<?php echo TLS_THEME_IMAGE_URL; ?>ad-620x80.png" alt="Ad" /></a> -->
 						</div>
 						<!-- .ad-spot -->
 					</div>
