@@ -41,10 +41,11 @@ require_once TLS_THEME_INC_DIR . 'customizer.php';
 
 global $tlsCustomize;
 $tlsCustomize = new Tls_Theme_Customize_Control();
-//$tlsCustomize->ads_section();
+
+/* require_once TLS_THEME_INC_DIR . 'check_page.php';
+new Check_Page(); */
 
 //require TLS_THEME_CONTROLS_DIR . 'category_listbox.php';
-
 
 
 /* ============================================================
