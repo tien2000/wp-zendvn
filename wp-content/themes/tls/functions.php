@@ -38,9 +38,12 @@ require_once TLS_THEME_WIDGETS_DIR . 'main.php';
 new Tls_Theme_Wg_Main();
 
 require_once TLS_THEME_INC_DIR . 'customizer.php';
-
 global $tlsCustomize;
 $tlsCustomize = new Tls_Theme_Customize_Control();
+
+require_once TLS_THEME_INC_DIR . 'support.php';
+global $tlsSupport;
+$tlsSupport = new Tls_Theme_Support();
 
 /* require_once TLS_THEME_INC_DIR . 'check_page.php';
 new Check_Page(); */

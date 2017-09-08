@@ -23,7 +23,7 @@ class Tls_Theme_Menu_Color_Section{
 ?>
 	<style type="text/css" id="tls-theme-customize">
 		<?php foreach ($options as $key => $val):?>
-				#site-navigation .<?php echo $key;?>:after{ 
+				#site-navigation .<?php echo $key;?>:after, <?php echo '.' . $key . '-bg';?>{ 
 					background-color: <?php echo $val;?>; 
 				}
 		<?php endforeach;?>
