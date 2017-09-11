@@ -1,6 +1,7 @@
 <?php 
     global $tlsSupport;
 ?>
+<!-- .archive-header -->
 <div class="clr" id="blog-wrap">
 <?php $i = 1;?>
 <?php while (have_posts()): the_post();?>
@@ -10,23 +11,7 @@
     $i++;
 ?>
 	<article class="clr loop-entry <?php echo $col; ?>">
-		<div class="loop-entry-media clr">
-    		<?php 
-    		  $cats       = get_the_category($post->ID);
-    		  $catObj     = $cats['0'];
-    		  $catID      = $catObj->cat_ID;
-    		  $catName    = get_cat_name($catID);    		  
-    		  $catUrl     = get_category_link($catID);
-    		  $catCss     = 'cat-' . $catID . '-bg';
-    		  
-    		  /* echo '<pre>';
-    		   print_r($catName);
-    		   echo '</pre>'; */
-    		?>
-			<div class="entry-cat-tag <?php echo $catCss;?>">
-				<a title="<?php echo $catName;?>" href="<?php echo $catUrl;?>"><?php echo $catName;?></a>
-			</div>
-			<!-- .entry-cat-tag -->
+		<div class="loop-entry-media clr">	
 			<?php 
                 $featured_img = wp_get_attachment_url(get_post_thumbnail_id($post->ID));
                 
