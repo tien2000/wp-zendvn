@@ -1,6 +1,11 @@
 <?php 
-    global $tlsSupport;
+    /* 
+     * esc_url(): Làm sạch đường dẫn, tránh lỗi liên quan câu SQL.
+     *  */
 ?>
+
+<?php global $tlsSupport;?>
+
 <div class="clr" id="blog-wrap">
 <?php $i = 1;?>
 <?php while (have_posts()): the_post();?>
@@ -78,13 +83,10 @@
 
 </div>
 <!-- #blog-wrap -->
-<div class="site-pagination clr">
-	<span class="site-pagination-heading">Pages</span>
-	<ul class="page-numbers">
-		<li><span class="page-numbers current">1</span></li>
-		<li><a href="#" class="page-numbers">2</a></li>
-	</ul>
-</div>
+<?php 
+	// Hiển thị phân trang
+	require_once TLS_THEME_DIR . '/pagining.php';
+?>
 <div class="ad-spot archive-bottom-ad clr">
 	<a title="Ad" href="#"> <img alt="Ad" src="images/ad-620x80.png">
 	</a>
