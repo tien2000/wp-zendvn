@@ -1,1 +1,11 @@
 @CHARSET "ISO-8859-1";
+.wp-caption{
+	margin-bottom: 10px;
+}
+
+.wp-caption-text{
+	text-align: center;
+	background-color: #f7f7f7;
+	padding: 3px;
+	display: block;
+}

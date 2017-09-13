@@ -4,6 +4,41 @@
             
         }
         
+        /*
+         * CAPTION SHORTCODE - REMOVE FIRST IMAGE
+         *  */
+        public function remove_first_image($image, $post_content){
+            //echo '<br>' . __METHOD__;
+            $pattern = '\[caption.*' . $image . '.*\[/caption\]';
+            $post_content = preg_replace('#' . $pattern . '#', '', $post_content,1);
+		    $post_content = preg_replace('#' . $image . '#', '', $post_content, 1);
+            
+            return $post_content;
+        }
+        
+        /* 
+         * CAPTION SHORTCODE - GET FIRST IMAGE
+         *  */
+        public function get_first_image($post_content = null){
+            $firstImg = '';
+            
+            if($post_content != null){
+                // Sử dụng biểu thức chính quy để lấy hình nằm trong bài viết
+                $pattern = '#\<img.*>#imU';           
+                preg_match_all($pattern, $post_content, $matches);
+                
+                /* echo '<pre>';
+                print_r($matches);
+                echo '</pre>'; */
+                
+                $imgArr = $matches[0];
+                if(count($imgArr) > 0){
+                    $firstImg = $imgArr[0];
+                }
+            }    
+            return $firstImg;
+        }
+        
         public function get_img_url($post_content) {
         
             $image  = '';

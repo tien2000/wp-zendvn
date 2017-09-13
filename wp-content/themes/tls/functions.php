@@ -50,6 +50,42 @@ new Check_Page(); */
 
 //require TLS_THEME_CONTROLS_DIR . 'category_listbox.php';
 
+/* ============================================================
+ * 8. Caption - Thay đổi cấu trúc của HTML SHORTCODE đã tồn tại
+ * ============================================================ */
+add_action('after_setup_theme', 'tls_theme_caption_shortcode');
+
+function tls_theme_caption_shortcode(){
+    remove_shortcode('caption');
+
+	add_shortcode('caption', 'tls_theme_sc_caption');
+}
+
+function tls_theme_sc_caption($attr, $content = null){
+    /* echo '<pre>';
+    print_r($attr);
+    echo '</pre>'; */
+    /* echo '<pre>';
+    print_r($content);
+    echo '</pre>'; */
+    
+    $strAttr = '';
+	if(count($attr) >0 ){
+		foreach ($attr as $key => $info){
+			$strAttr .= ' ' . $key . '="' . $info .'" ';
+		}
+	}
+	$pattern = '#(<a.*\/a>)(.*)#';
+	preg_match_all($pattern, $content, $matches);
+
+	$img = $matches[1][0];
+	$desc = $matches[2][0];
+	$out = '<p ' . $strAttr . ' class="wp-caption aligncenter">'
+        	. $img
+        	. '<span class="wp-caption-text">' . $desc . '</span>'
+        	. '</p>';
+	return $out;
+}
 
 /* ============================================================
  * 7. Menu - Chỉnh sửa giá trị thuộc tính class trong thẻ <li>
