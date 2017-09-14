@@ -29,13 +29,27 @@
     	<?php 
     	   $content = get_the_content();
     	   $format = get_post_format($post->ID);
+    	   
     	   echo 'format: ' . $format . '<br>';
+    	   
     	   if($format == false){
-    	       $firstImg = $tlsSupport->get_first_image($content);
-    	       $content = $tlsSupport->remove_first_image($firstImg, $content);
-    	   }    	
+    	       $firstImg   = $tlsSupport->get_first_image($content);
+    	       $content    = $tlsSupport->remove_first_image($firstImg, $content);
+    	   }
+    	   
+    	   if($format == 'audio'){
+    	       $firstAudio = $tlsSupport->get_first_audio($content);
+    	       $content    = $tlsSupport->remove_first_audio($firstAudio, $content);
+    	   }
+    	   
+    	   if($format == 'video'){
+    	       $firstVideo = $tlsSupport->get_first_video($content);
+    	       $content    = $tlsSupport->remove_first_video($firstVideo, $content);
+    	   }
+    	   
     	   $content = apply_filters( 'the_content', $content );
 	       $content = str_replace( ']]>', ']]&gt;', $content );
+	       
     	   echo $content;
     	?>    	
     	<div class="ad-spot post-bottom-ad clr">
