@@ -10,10 +10,20 @@
     //echo '<br>format: ' . $format;
 ?>
 
+<?php if($format == 'gallery'):?>
+<?php 
+    $firstGallery = $tlsSupport->get_first_gallery($postObj->post_content);    
+    //echo $firstGallery;
+?>
+<div class="single-post-media clr">
+		<?php echo do_shortcode($firstGallery);?>
+</div>
+<?php endif;?>
+
 <?php if($format == 'video'):?>
 <?php 
     $firstVideo = $tlsSupport->get_first_video($postObj->post_content);    
-    echo $firstVideo;
+    //echo $firstVideo;
 ?>
 <div class="single-post-media clr">
 	<div class="post-video wpex-video-embed clr">
@@ -31,7 +41,7 @@
 <?php if($format == 'audio'):?>
 <?php 
     $firstAudio = $tlsSupport->get_first_audio($postObj->post_content);    
-    echo $firstAudio;
+    //echo $firstAudio;
 ?>
 <div class="single-post-media clr">
 	<div class="post-thumbnail">

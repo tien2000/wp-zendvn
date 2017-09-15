@@ -50,6 +50,56 @@ new Check_Page(); */
 
 //require TLS_THEME_CONTROLS_DIR . 'category_listbox.php';
 
+////////////////////////////////////////////////////////////////
+
+/* ============================================================
+ * 9. Gallery - Thay đổi cấu trúc của GALLERY SHORTCODE đã tồn tại
+ * ============================================================ */
+add_action('after_setup_theme', 'tls_theme_gallery_shortcode');
+
+function tls_theme_gallery_shortcode(){
+    remove_shortcode('gallery');
+
+    add_shortcode('gallery', 'tls_theme_sc_gallery');
+}
+
+function tls_theme_sc_gallery($attr, $content = null){
+    static $instance = 0;
+    $instance++;
+    $selector = 'gallery-' . $instance;
+    
+    $out = '<div id="' . $selector . '" class="post-gallery owl-carousel wpex-gallery-lightbox owl-loaded owl-drag">';
+    $imgIDs = explode(',', $attr['ids']);
+    foreach ($imgIDs as $val){
+        $imgUrl = wp_get_attachment_url($val);
+        //echo '<br>' . $imgUrl;
+        $out .= '<div class="owl-item">
+    				<div data-dot="<img src=\''.$imgUrl.'\' alt=\'\'>">
+    					<figure>
+    						<a title="" href="'.$imgUrl.'">
+    							<img width="620" height="350" alt="" src="'.$imgUrl.'">
+    							<span class="overlay"></span>
+    						</a>
+    					</figure>
+    				</div>
+                   </div>
+    			';
+    }
+     
+    $out .= '</div>';
+     
+     /* echo '<pre>';
+     print_r($imgIDs);
+     echo '</pre>'; */
+     /* echo '<pre>';
+     print_r($content);
+     echo '</pre>'; */
+
+    return $out;
+}
+
+////////////////////////////////////////////////////////////////
+
 /* ============================================================
  * 8. Caption - Thay đổi cấu trúc của HTML SHORTCODE đã tồn tại
  * ============================================================ */
@@ -86,6 +136,8 @@ function tls_theme_sc_caption($attr, $content = null){
         	. '</p>';
 	return $out;
 }
+
+//////////////////////////////////////////////////////////////
 
 /* ============================================================
  * 7. Menu - Chỉnh sửa giá trị thuộc tính class trong thẻ <li>

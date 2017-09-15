@@ -4,6 +4,45 @@
             
         }
         
+        /*
+         * GALLERY SHORTCODE - REMOVE FIRST GALLERY
+         *  */
+        public function remove_first_gallery($gallery, $post_content){
+            //echo '<br>' . __METHOD__;
+        
+            $gallery = str_replace('[', '\[', $gallery);
+            $gallery = str_replace(']', '\]', $gallery);
+        
+            $pattern = '#' . $gallery . '#';
+        
+            $post_content = preg_replace($pattern, '', $post_content, 1);
+        
+            return $post_content;
+        }
+        
+        /*
+         * GALLERY SHORTCODE - GET FIRST GALLERY
+         *  */
+        public function get_first_gallery($post_content = null){
+            $firstGallery = '';
+        
+            if($post_content != null){
+                // Sử dụng biểu thức chính quy để lấy hình nằm trong bài viết
+                $pattern = '#(\[gallery.*\])#imU';
+                preg_match_all($pattern, $post_content, $matches);
+        
+                /* echo '<pre>';
+                print_r($matches);
+                echo '</pre>'; */
+        
+                $galleryArr = $matches[0];
+                if(count($galleryArr) > 0){
+                    $firstGallery = $galleryArr[0];
+                }
+            }
+            return $firstGallery;
+        }
+        
         public function remove_first_video($video, $post_content){
             //echo '<br>' . __METHOD__;
         

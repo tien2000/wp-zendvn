@@ -47,6 +47,11 @@
     	       $content    = $tlsSupport->remove_first_video($firstVideo, $content);
     	   }
     	   
+    	   if($format == 'gallery'){
+    	       $firstGallery = $tlsSupport->get_first_gallery($content);
+    	       $content    = $tlsSupport->remove_first_gallery($firstGallery, $content);
+    	   }
+    	   
     	   $content = apply_filters( 'the_content', $content );
 	       $content = str_replace( ']]>', ']]&gt;', $content );
 	       
@@ -61,6 +66,7 @@
     <div class="post-tags">
     	<?php the_tags();?>
     </div>
+    
     <div class="social-share-bottom clr">
     	<div class="social-share clr">
     		<a
@@ -96,5 +102,68 @@
     			class="fa fa-linkedin"></span>Share</a>
     	</div>
     </div>
+    
+    <div class="author-bio clr">
+    	<div class="author-bio-avatar clr">
+    		<a title="Visit Author Page" href="<?php echo get_author_posts_url($post->post_author);?>"> 
+    		<?php echo get_avatar($post->post_author, 60);?>
+    		</a>
+    	</div>
+    	<!-- .author-bio-avatar -->
+    	<div class="author-bio-content clr">
+    		<div class="author-bio-author clr">
+    			<?php echo __('Authored by') . ': '?> 
+				<?php the_author_posts_link();?>
+    		</div>
+    		<div class="author-bio-url">
+    			<span><?php echo __('Website') . ': '?></span> 
+    			<?php echo get_the_author_link();?>
+    		</div>
+    		<p><?php the_author_meta('description')?></p>
+    	</div>
+    	<!-- .author-bio-content -->
+    	<div class="author-bio-social clr">
+    		<a target="_blank" class="twitter" title="Twitter"
+    			href="https://twitter.com/WPExplorer"> <span class="fa fa-twitter"></span></a>
+    		<a target="_blank" class="facebook" title="Facebook" href="#"> <span
+    			class="fa fa-facebook"></span>
+    		</a> <a target="_blank" class="google-plus" title="Google Plus"
+    			href="#"> <span class="fa fa-google-plus"></span>
+    		</a> <a target="_blank" class="linkedin" title="LinkedIn" href="#"> <span
+    			class="fa fa-linkedin"></span>
+    		</a> <a target="_blank" class="pinterest" title="Pinterest" href="#">
+    			<span class="fa fa-pinterest"></span>
+    		</a> <a target="_blank" class="instagram" title="Instagram" href="#">
+    			<span class="fa fa-instagram"></span>
+    		</a>
+    	</div>
+    	<!-- .author-bio-social -->
+    </div>
+    <div class="next-prev clr">
+    	<div class="post-prev">
+    		<?php 
+    		  /* previous_post_link( $format = '&laquo; %link', $link = '%title', 
+    		      $in_same_term = false, $excluded_terms = '', $taxonomy = 'category' ); */
+    		  $format = '<img src="'. TLS_THEME_IMAGE_URL . 'prev-post.png" alt="Previous Article">';
+    		  $link = __('Previous Article');
+    		  echo previous_post_link($format . '%link', $link);
+    		?>
+    		<!-- <a href="http://wpexplorer-demos.com/spartan/formula-1-is-boring/" rel="next">
+    		<img src="http://wpexplorer-demos.com/spartan/wp-content/themes/wpex-spartan/images/prev-post.png"
+    			alt="Next Article">Previous Article</a> -->
+    	</div>
+    	<div class="post-next">
+    		<?php
+    		  $format = '<img src="'. TLS_THEME_IMAGE_URL . 'next-post.png" alt="Next Article">';
+    		  $link = __('Next Article');
+    		  echo next_post_link($format . '%link', $link);
+    		?>
+    		<!-- <a href="http://wpexplorer-demos.com/spartan/nascar-results/"
+    			rel="prev"><img
+    			src="http://wpexplorer-demos.com/spartan/wp-content/themes/wpex-spartan/images/next-post.png"
+    			alt="Next Article">Next Article</a> -->
+    	</div>
+    </div>
+	
 <?php endwhile;?>
 <?php endif;?>
