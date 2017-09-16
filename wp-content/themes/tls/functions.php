@@ -45,6 +45,79 @@ require_once TLS_THEME_INC_DIR . 'support.php';
 global $tlsSupport;
 $tlsSupport = new Tls_Theme_Support();
 
+// Hàm định dạng comment
+function tls_comment($comment, $args, $depth){
+    //echo '<br>' . __FUNCTION__;
+    
+    global $post;    
+    $author_id  = $post->post_author;
+    $comment_user_id = $comment->user_id;
+    
+    /* echo '<pre>';
+    print_r($post);
+    echo '</pre>'; */
+    /* echo '<pre>';
+    print_r($comment);
+    echo '</pre>'; */
+    
+    switch ($comment->comment_type){
+        // Xử lý comment từ website bên ngoài.
+        case 'pingback':
+        case 'trackback':
+?>
+	<li id="comment-<?php comment_ID();?>" <?php comment_class('clr');?>>
+		<div class="pingback-entry">
+			<span class="pingback-heading"><?php _e('Pingback: ')?></span>
+			<?php comment_author_link();?>
+		</div>
+<?php
+        break;
+        // Kết thúc xử lý comment từ website bên ngoài.
+        
+        case '':
+?>
+
+    <li id="li-comment-<?php comment_ID();?>">
+    	<div id="comment-<?php comment_ID();?>" <?php comment_class('clr');?>>
+    		<div class="comment-author vcard">
+    			<?php echo get_avatar($comment, 60);?>
+    		</div>
+    		<div class="comment-details clr ">
+    			<header class="comment-meta">
+    				<cite class="fn"> 
+    					<?php echo get_comment_author_link();?>
+    					<?php 
+    					   // Kiểm tra comment của User nào.
+    					   if($comment_user_id == $author_id):
+    					?>
+    						<span class="author-badge">Author</span>
+    					<?php endif;?>
+    				</cite> <span class="comment-date"> <a
+    					href="http://wpexplorer-demos.com/spartan/model-shoot-for-gq-2015/#comment-120"><time
+    							datetime="2014-09-23T23:49:31+00:00"><?php comment_date();?></time></a>
+    					<?php echo __('at ')?> <?php comment_time();?>
+    				</span>
+    			</header>
+    			<div class="comment-content entry clr">
+    				<?php comment_text();?>
+    			</div>
+    			<div class="reply comment-reply-link">
+    				<?php 
+    				    $replyArgs = array(
+    				        'depth'       => $depth,
+    				        'max_depth'   => $args['max_depth'],
+    				        'reply_text'  => 'Reply to this message',
+    				    );
+    				    comment_reply_link($replyArgs);?>
+    			</div>
+    		</div>
+    	</div>
+
+<?php
+        break;
+    }
+}
+
 /* require_once TLS_THEME_INC_DIR . 'check_page.php';
 new Check_Page(); */
 
@@ -337,6 +410,10 @@ function tls_theme_register_script(){
     wp_register_script('tls_theme_global', $jsUrl . 'global.js', array('jquery'), '1.0', true );
     wp_enqueue_script('tls_theme_global');
     
+    if(is_singular() && comments_open()){
+        // scrip hỗ trợ hiển thị Form comment dưới phần Reply
+        wp_enqueue_script('comment-reply');
+    }
 }
 
 function tls_theme_script_code(){
