@@ -45,6 +45,99 @@ require_once TLS_THEME_INC_DIR . 'support.php';
 global $tlsSupport;
 $tlsSupport = new Tls_Theme_Support();
 
+/* ============================================================
+ * 11. TLS_HOMEPAGE SHORTCODE
+ * ============================================================ */
+add_shortcode('tls_homepage', 'tls_theme_sc_homepage');
+
+function tls_theme_sc_homepage($attr, $content = null){ 
+    global $tlsSupport;
+    $out = '';
+    $catArr = explode(',', $attr['cats']);
+    $number = $attr['number'];
+    $i = 1;
+    
+    if(count($catArr) > 0){
+        foreach ($catArr as $cat){
+            //echo '<br>' . $cats;
+            
+            // Lấy danh sách bài viết của Category
+            $args = array(
+                'posts_per_page'    => $number,
+                'paged'             => 1,
+                'post_type'         => 'post',
+                'ignore_sticky_posts'=> true,
+                //'category__in'      => $cat,
+                'cat'               => $cat
+            );
+            $wpQuery = new WP_Query($args);
+            
+            $col = ($i%2)?1:2;
+            $i++;
+            
+            $out .= '<div class="home-cat-entry clr col-' . $col . '">
+                        <h2 class="heading">
+                            <a href="'. get_category_link($cat) .'" title="'. get_cat_name($cat) .'">'. get_cat_name($cat) .'</a>
+                        </h2>
+                        <ul>
+                    ';
+            
+            if($wpQuery->have_posts()){
+                $num = 1;
+                while ($wpQuery->have_posts()){
+                    $wpQuery->the_post();
+                    if($num == 1){
+                        $featured_img = wp_get_attachment_url(get_post_thumbnail_id($wpQuery->post->ID));
+                        
+                        if($featured_img == false){
+                            $imgUrl = $tlsSupport->get_img_url($wpQuery->post->post_content);
+                        }else {
+                            $imgUrl = $featured_img;
+                        }
+                        if (isset($imgUrl)){
+                            $imgUrl = $tlsSupport->get_new_img_url($imgUrl, '300px', '169px');
+                        }
+                        
+                        $out .= '<li class="home-cat-entry-post-first clr">
+                            		<div class="home-cat-entry-post-first-media clr">
+                            			<a href="'.get_permalink().'" title="' . get_the_title() . '"> 
+                            			    <img src="'.$imgUrl.'" alt="" width="620" height="350">
+                            			</a>
+                            			<div class="entry-cat-tag cat-'.$cat.'-bg">
+                            				<a href="'.get_category_link($cat).'" title="' . get_cat_name($cat) . '">' . get_cat_name($cat) . '</a>
+                            			</div>
+                            		</div>
+                            		<h3 class="home-cat-entry-post-first-title">
+                            			<a href="'.get_permalink().'" title="' . get_the_title() . '">' . mb_substr(get_the_title() , 0, 40) . '...</a>
+                            		</h3>
+                            		<p>' .mb_substr(get_the_excerpt(), 0, 120) . '...</p>
+                            	</li>
+                                ';
+                    }else{
+                        $out .= '<li class="home-cat-entry-post-other clr">
+                                    <a href="'.get_permalink().'" 
+                                         title="' . get_the_title() . '">' . mb_substr(get_the_title() , 0, 40) . '...</a>
+                                </li>
+                                ';
+                    }
+                    $num++;
+                }
+            }
+            $out .= '</ul></div>';
+        }
+    }
+    return $out;
+}
+
+////////////////////////////////////////////////////////////////
+
+/* ============================================================
+ * 10. HIỂN THỊ DANH SÁCH COMMENT
+ * ============================================================ */
+
+
+////////////////////////////////////////////////////////////////
+
 // Hàm định dạng comment
 function tls_comment($comment, $args, $depth){
     //echo '<br>' . __FUNCTION__;
