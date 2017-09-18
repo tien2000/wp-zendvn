@@ -166,9 +166,7 @@
     </div>
     
     <div id="comments" class="comments-area clr">
-    	<?php comments_template('', true);?>
-		<div class="comments-title">
-		</div>
+    	<?php comments_template('', true);?>		
 	</div>		
 	
 <?php endwhile;?>
