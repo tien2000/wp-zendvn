@@ -23,6 +23,7 @@ define('TLS_PLUGIN_METABOX_DIR', TLS_PLUGIN_DIR . '/metabox/');
 define('TLS_PLUGIN_SETTINGS_DIR', TLS_PLUGIN_DIR . '/settings/');
 define('TLS_PLUGIN_CUSTOMPOSTS_DIR', TLS_PLUGIN_DIR . '/posts/');
 define('TLS_PLUGIN_TAXXONOMY_DIR', TLS_PLUGIN_DIR . '/taxonomys/');
+define('TLS_PLUGIN_TABLE_DIR', TLS_PLUGIN_DIR . '/tables/');
 
 if(!is_admin()){
     require_once TLS_PLUGIN_INCLUDES_DIR . 'public.php';

@@ -1,0 +1,17 @@
+@CHARSET "ISO-8859-1";
+
+.column-id{
+	width: 7%;
+}
+
+.column-picture{
+	width: 15%;
+}
+
+.column-author_id{
+	width: 15%;
+}
+
+.column-status{
+	width: 10%;
+}
