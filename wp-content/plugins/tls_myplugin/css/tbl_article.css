@@ -8,10 +8,11 @@
 	width: 15%;
 }
 
-.column-author_id{
+.column-author_id, .column-user_nicename{
 	width: 15%;
 }
 
 .column-status{
-	width: 10%;
+	width: 6%;
+	text-align: center;
 }

@@ -16,8 +16,15 @@
         
         public function article_menu(){
             //echo '<br>' . __METHOD__;
+            $action = @$_REQUEST['action'];
+            $func = 'display';
+            
+            if($action == 'edit'){
+                $func = 'display_edit';
+            }
+            
             add_menu_page('Articles', 'Articles', 'manage_options', 
-                            $this->_menuSlug, array($this, 'display'), '', 3);
+                            $this->_menuSlug, array($this, $func), '', 3);
             
             add_submenu_page($this->_menuSlug, 'Add New', 'Add New', 'manage_options', 
                                 $this->_menuSlug . '-add', array($this, 'display_add'));
@@ -30,8 +37,12 @@
             require_once TLS_PLUGIN_TABLE_DIR . 'html/article_list.php';
         }
         
+        public function display_edit(){
+            echo '<br>' . __METHOD__;
+        }
+        
         public function display_add(){
-            //echo '<br>' . __FILE__;
+            echo '<br>' . __METHOD__;
         }
         
         public function cssFile($param) {

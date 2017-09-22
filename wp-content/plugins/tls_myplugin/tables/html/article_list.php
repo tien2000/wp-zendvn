@@ -7,6 +7,7 @@
 ?>
 
 <div class="wrap">
-	<h1>Hello world</h1>	
+	<h1>Articles</h1>	
+	<?php $tblArticle->search_box('Search Articles', 'search-id');?>
 	<?php $tblArticle->display();?>
 </div>
