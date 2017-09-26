@@ -9,7 +9,21 @@
 
 <?php    
     $page = @$_REQUEST['page'];
-    $action     = 'add';    
+    $action     = 'add';
+    
+    // Lable
+    $lbl = 'Add New Article';
+    if(isset($_GET['action'])){
+        $action = $_GET['action'];
+        //echo '<br>' . $action;
+        if($action == 'edit'){
+            $lbl        = 'Edit Article';
+            $vTitle     = $row->title;
+            $vPicture   = $row->picture;
+            $vContent   = $row->content;
+            $vStatus    = $row->status;
+        }
+    }
     
     // In thông báo lỗi nhập liệu.
     $mes = '';
@@ -27,7 +41,7 @@
         $vStatus = @$_POST['status'];
     }
     
-    if($_GET['mes'] == 1){
+    if(@$_GET['mes'] == 1){
         $mes = '<div class="updated"><p>'. __('Update Success') .'</p></div>';
     }
     
@@ -41,7 +55,7 @@
 ?>
 
 <div class="wrap">
-	<h1>Add New Article</h1>
+	<h1><?php echo $lbl;?></h1>
 	<?php echo $mes;?>
 	<form method="post" action="" id="<?php echo $page;?>" enctype="multipart/form-data">
 		<input type="hidden" name="action" value="<?php echo $action;?>">

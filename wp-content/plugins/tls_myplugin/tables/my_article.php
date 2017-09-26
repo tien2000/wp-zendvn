@@ -49,8 +49,39 @@
         }
         
         public function display_edit(){
-            echo '<br>' . __METHOD__;
+            //cho '<br>' . __METHOD__;
             
+            // ========= Kiểm tra dữ liệu có được gửi qua hay ko. ==========
+            // Lấy dữ liệu từ database đưa vào form
+            if(!isset($_POST['title'])){
+                global $wpdb;
+                $article_id = (int)$_GET['article'];
+                $table = $wpdb->prefix . 'mp_article';
+                $sql = 'SELECT * FROM '. $table .' WHERE id='. $article_id .' ';
+                $row = $wpdb->get_row($sql);
+                
+                /* echo '<pre>';
+                print_r($row);
+                echo '</pre>'; */
+            }
+            // Cập nhật dữ liệu mới
+            else{
+                $security_code = @$_REQUEST['security_code'];
+                if(wp_verify_nonce($security_code, 'edit')){
+                    // Kiểm tra dữ liệu nhập vào
+                    $errors = $this->validate_form();
+                    /* echo '<pre>';
+                     print_r($errors);
+                     echo '</pre>'; */
+                    
+                    if(count($errors) == 0){
+                        $this->save_data('edit');
+                        $url = $_REQUEST['_wp_http_referer'] . '&mes=1';
+                        wp_redirect($url);
+                    }
+                }
+            }            
+            require_once TLS_PLUGIN_TABLE_DIR . 'html/article_form.php';
         }
         
         public function display_add(){
@@ -81,19 +112,22 @@
         private function save_data($action = 'add'){
             global $wpdb;
             $table = $wpdb->prefix . 'mp_article';
+            $data = array(
+                'title' => $_POST['title'],
+                'picture' => $_POST['picture'],
+                'content' => $_POST['content'],
+                'status' => $_POST['status'],
+                'author_id' => get_current_user_id()
+            );
+            $format = array('%s', '%s', '%s', '%d', '%d');
             
-            if($action == 'add'){
-                $data = array(
-                    'title' => $_POST['title'],
-                    'picture' => $_POST['picture'],
-                    'content' => $_POST['content'],
-                    'status' => $_POST['status'],
-                    'author_id' => get_current_user_id()
-                );
-                $format = array('%s', '%s', '%s', '%d', '%d');
-                
+            if($action == 'add'){                                               
                 $wpdb->insert($table, $data, $format);
-            }
+            }else if($action == 'edit'){
+                $where = array('id' => @$_GET['article']);
+                $where_format = array('%d');
+                $wpdb->update($table, $data, $where, $format, $where_format);                
+            }            
         }
         
         private function validate_form(){
