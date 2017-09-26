@@ -43,24 +43,24 @@ class Article_Table extends WP_List_Table{
         global $wpdb;
     
         //&orderby=title&order=asc
-        $orderby = (@$_REQUEST['orderby'] == '')?'id':$_REQUEST['orderby'];
-        $order = (@$_REQUEST['order'] == '')?'desc':$_REQUEST['order'];
+        $orderby    = (@$_REQUEST['orderby'] == '')?'id':$_REQUEST['orderby'];
+        $order      = (@$_REQUEST['order'] == '')?'desc':$_REQUEST['order'];
         $tblArticle = $wpdb->prefix . 'mp_article';
-        $tblUser = $wpdb->prefix . 'users';
-        $sql = 'SELECT a.*, u.user_nicename
-                FROM '. $tblArticle .' AS a
-                INNER JOIN '. $tblUser .' AS u
-                ON a.author_id = u.ID
-                ORDER BY a.'.$orderby.' '. $order .' ';
+        $tblUser    = $wpdb->prefix . 'users';
+        $sql        = 'SELECT a.*, u.user_nicename
+                        FROM '. $tblArticle .' AS a
+                        INNER JOIN '. $tblUser .' AS u
+                        ON a.author_id = u.ID
+                        ORDER BY a.'.$orderby.' '. $order .' ';
         
         $this->_sql = $sql;
-        $paged = max(1, @$_REQUEST['paged']);
-        $offset = ($paged - 1) * $this->_per_page;
-        $sql .= 'LIMIT ' . $this->_per_page . ' OFFSET ' . $offset;
+        $paged      = max(1, @$_REQUEST['paged']);
+        $offset     = ($paged - 1) * $this->_per_page;
+        $sql        .= 'LIMIT ' . $this->_per_page . ' OFFSET ' . $offset;
         
         //echo $sql;
     
-        $data = $wpdb->get_results($sql, ARRAY_A);
+        $data       = $wpdb->get_results($sql, ARRAY_A);
         /* echo '<pre>';
          print_r($data);
          echo '</pre>'; */
