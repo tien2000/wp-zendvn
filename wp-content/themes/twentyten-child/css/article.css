@@ -1,0 +1,14 @@
+@CHARSET "ISO-8859-1";
+
+
+.nav-article a, .current {
+    color: #0066cc;
+    text-decoration: none;
+    border: 1px solid #eaeaea;
+    padding: 3px 10px;
+    margin: 0px 2px 0px 0px;
+}
+
+.nav-article .current {
+	background-color: floralwhite;
+}
