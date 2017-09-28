@@ -51,16 +51,38 @@ class Article_Table extends WP_List_Table{
                         FROM '. $tblArticle .' AS a
                         INNER JOIN '. $tblUser .' AS u
                         ON a.author_id = u.ID
-                        ORDER BY a.'.$orderby.' '. $order .' ';
+                        ';
+        
+        //========== Lọc theo status hoặc search hoặc cả 2 =============// 
+        $whereArr = array();
+        
+        $filter_status = @$_GET['filter_status'];
+        if(isset($_GET['filter_status']) && $filter_status != '0'){
+            $status = ($filter_status == 'active')?1:0;
+            $whereArr[] = " (a.status = $status) ";
+        }
+        
+        if(isset($_GET['s']) && strlen($_GET['s']) > 2){     
+            $s = $_GET['s'];
+            $whereArr[] = " (a.title LIKE '%$s%' OR a.content LIKE '%$s%') ";
+        }
+        
+        if(count($whereArr) > 0){
+            $sql .= " WHERE " . join(" AND ", $whereArr);
+        }
         
         $this->_sql = $sql;
-        $paged      = max(1, @$_REQUEST['paged']);
-        $offset     = ($paged - 1) * $this->_per_page;
-        $sql        .= 'LIMIT ' . $this->_per_page . ' OFFSET ' . $offset;
         
-        //echo $sql;
+        $paged  = max(1, @$_REQUEST['paged']);
+        $offset = ($paged - 1) * $this->_per_page;
+        
+        $sql   .= 'ORDER BY a.'.$orderby.' '. $order .' LIMIT ' . $this->_per_page 
+                   . ' OFFSET ' . $offset;
+        
+        echo '<br>' . $sql;
     
         $data       = $wpdb->get_results($sql, ARRAY_A);
+        
         /* echo '<pre>';
          print_r($data);
          echo '</pre>'; */
@@ -147,7 +169,7 @@ class Article_Table extends WP_List_Table{
         
         if($which == 'top'){
             $htmlObj = new TlsHtml();
-            $filterVal = '';
+            $filterVal = @$_REQUEST['filter_status'];
             $options['data'] = array(
                 '0' => 'Status filter',
                 'active' => 'Active',

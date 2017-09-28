@@ -50,10 +50,38 @@
         }
         
         public function display(){
-            //echo '<br>' . __FILE__;
+            //echo '<br>' . __FILE__;            
+            
+            if(isset($_POST['_wpnonce'])){
+                $url = $this->createUrl();
+                wp_redirect($url);
+            }
+            
             require_once TLS_PLUGIN_TABLE_DIR . 'tbl_article.php';
             
             require_once TLS_PLUGIN_TABLE_DIR . 'html/article_list.php';
+        }
+        
+        private function createUrl(){
+            $paged = max(1, @$_REQUEST['paged']);
+            
+            /* echo '<pre>';
+            print_r($_POST);
+            echo '</pre>'; */
+            
+            $url = 'admin.php?page=' . @$_REQUEST['page'];
+            
+            if(isset($_POST['filter_status']) && $_POST['filter_status'] != '0'){                
+                $url .= '&filter_status=' . $_POST['filter_status'];
+            }
+            
+            if(isset($_POST['s']) && strlen($_POST['s']) > 2){
+                $url .= '&s=' . $_POST['s'];
+            }
+            
+            $url .= '&paged=' . $paged;
+            
+            return $url;
         }
         
         public function display_edit(){
