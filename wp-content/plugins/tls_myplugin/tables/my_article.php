@@ -51,6 +51,7 @@
         
         public function display(){
             //echo '<br>' . __FILE__;            
+            require_once TLS_PLUGIN_TABLE_DIR . '/tmp/roles.php';
             
             if(isset($_POST['_wpnonce'])){
                 $url = $this->createUrl();

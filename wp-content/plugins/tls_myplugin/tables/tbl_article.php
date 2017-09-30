@@ -79,7 +79,7 @@ class Article_Table extends WP_List_Table{
         $sql   .= 'ORDER BY a.'.$orderby.' '. $order .' LIMIT ' . $this->_per_page 
                    . ' OFFSET ' . $offset;
         
-        echo '<br>' . $sql;
+        //echo '<br>' . $sql;
     
         $data       = $wpdb->get_results($sql, ARRAY_A);
         
