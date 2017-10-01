@@ -67,6 +67,13 @@ class Article_Table extends WP_List_Table{
             $whereArr[] = " (a.title LIKE '%$s%' OR a.content LIKE '%$s%') ";
         }
         
+        require_once TLS_PLUGIN_TABLE_DIR . 'caps.php';
+        $cap = new Tls_Mp_Article_Caps();
+        if($cap->check_cap('tls_mp_article_own_list')){
+            echo '<br>' . __METHOD__;
+            $whereArr[] = " (a.author_id = " . get_current_user_id() . ") ";
+        }
+        
         if(count($whereArr) > 0){
             $sql .= " WHERE " . join(" AND ", $whereArr);
         }

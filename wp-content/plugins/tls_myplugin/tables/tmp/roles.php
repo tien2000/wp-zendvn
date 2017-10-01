@@ -38,12 +38,6 @@
         public function __construct() {
             //echo '<br>' . __METHOD__;
             
-            global $wp_roles;
-            
-            echo '<pre>';
-            print_r($wp_roles->get_role('author'));
-            echo '</pre>';
-            
         }
     }    
 ?>

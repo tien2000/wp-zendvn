@@ -6,13 +6,20 @@
      *  */
 ?>
 
+<?php 
+    require_once TLS_PLUGIN_TABLE_DIR . 'caps.php';
+?>
+
 <?php
     class Tls_Mp_Table_MyArticle{
         
-        private $_menuSlug = 'tls-mp-table-myarticle';
+        private $_menuSlug = 'tls-mp-table-myarticle';        
+        private $_caps;
         
         public function __construct(){
             //echo '<br>' . __METHOD__;
+            
+            $this->_caps = new Tls_Mp_Article_Caps();
             
             add_action('admin_menu', array($this, 'article_menu'));
             
@@ -23,6 +30,8 @@
             
             // Khắc phục lỗi header trong file /wp-includes/pluggable.php
             add_action('init', array($this, 'do_output_buffer'));
+            
+            add_action('admin_init', array($this->_caps, 'add_caps_for_role'));
         }
         
         public function article_menu(){
@@ -30,28 +39,108 @@
             $action = @$_REQUEST['action'];
             $func = $this->get_func();
             
-            add_menu_page('Articles', 'Articles', 'manage_options', 
+            add_menu_page('Articles', 'Articles', 'tls_mp_article', 
                             $this->_menuSlug, array($this, $func), '', 3);
             
-            add_submenu_page($this->_menuSlug, 'Add New', 'Add New', 'manage_options', 
-                                $this->_menuSlug . '-add', array($this, 'display_add'));
+            //===== Phân quyền thêm mới ======//
+            $addFunc = 'display_add';
+            if(!$this->_caps->check_cap('tls_mp_article_add')){
+                $addFunc = 'no_access';
+            }
+            
+            add_submenu_page($this->_menuSlug, 'Add New', 'Add New', 'tls_mp_article_list', 
+                                $this->_menuSlug . '-add', array($this, $addFunc));
         }
 
         private function get_func(){
+            $cap = $this->_caps;
+            
+            
             $action = @$_REQUEST['action'];
-            switch ($action){
-                case 'edit'     :return 'display_edit';
-                case 'delete'   :return 'delete_data';
-                case 'inactive' :return 'status';
-                case 'active'   :return 'status';
-                
-                default         :return 'display';
+            
+            $func = 'display';
+            
+            /* ======================================
+             * Xử lý phân quyền trong trường hợp Edit
+             * ====================================== */
+            if($action == 'edit'){
+                $func = 'display_edit';
+                if(!$cap->check_cap('tls_mp_article_edit')){
+                    $func = 'no_access';
+                }
+                if($cap->check_cap('tls_mp_article_own_edit')){
+                    if ($this->check_author() == 1){
+                        $func = 'display_edit';
+                    }else {
+                        $func = 'no_access';
+                    }
+                }
             }
+            
+            /* ======================================
+             * Xử lý phân quyền trong trường hợp Delete
+             * ====================================== */
+            if($action == 'delete'){
+                $func = 'delete_data';
+                if(!$cap->check_cap('tls_mp_article_delete')){
+                    $func = 'no_access';
+                }
+                if($cap->check_cap('tls_mp_article_own_delete')){
+                    if ($this->check_author() == 1){
+                        $func = 'delete_data';
+                    }else {
+                        $func = 'no_access';
+                    }
+                }
+            }
+            
+            /* ======================================
+             * Xử lý phân quyền trong trường hợp Status
+             * ====================================== */
+            if($action == 'inactive' || $action == 'active'){
+                $func = 'status';
+                if(!$cap->check_cap('tls_mp_article_status')){
+                    $func = 'no_access';
+                }
+                if($cap->check_cap('tls_mp_article_own_status')){
+                    if ($this->check_author() == 1){
+                        $func = 'status';
+                    }else {
+                        $func = 'no_access';
+                    }
+                }
+            }
+            
+            return $func;
+        }
+        
+        private function check_author(){
+            //echo '<br>' . __METHOD__;
+            
+            global $wpdb;
+            $author = false;
+            $tblArticle = $wpdb->prefix . 'mp_article';
+            $articleID  = @$_REQUEST['article'];
+            $sql = 'SELECT Count(a.id) '
+                    . ' FROM ' . $tblArticle . ' AS a' 
+                    .' WHERE a.author_id = %d' 
+                    .' AND a.id = %d ';
+            
+            // =========== Xác định bài viết thuộc tác giả nào (trả về 1: đúng tác giả)  ================== //
+            $item = $wpdb->get_var($wpdb->prepare($sql, get_current_user_id(), $articleID));
+            
+            if ($item == 1){
+                $author = true;
+            }
+            return $author;
+        }
+        
+        public function no_access(){
+            echo '<h3>Bạn không có quyền truy cập vào vùng này</h3>';
         }
         
         public function display(){
-            //echo '<br>' . __FILE__;            
-            require_once TLS_PLUGIN_TABLE_DIR . '/tmp/roles.php';
+            //echo '<br>' . __FILE__;
             
             if(isset($_POST['_wpnonce'])){
                 $url = $this->createUrl();
@@ -254,4 +343,16 @@
         public function do_output_buffer(){
             ob_start();
         }
+        
+        /* private function get_func(){        
+            $action = @$_REQUEST['action'];
+            switch ($action){
+                case 'edit'     :return 'display_edit';
+                case 'delete'   :return 'delete_data';
+                case 'inactive' :return 'status';
+                case 'active'   :return 'status';
+        
+                default         :return 'display';
+            }
+        } */
     }
