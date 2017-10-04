@@ -5,8 +5,13 @@
             //$this->ajaxPage2();
             //$this->tabsPage();
             
-            $this->myArticle();
+            $this->myHttp();
             
+        }
+        
+        public function myHttp(){
+            require_once TLS_PLUGIN_DIR . '/http/request.php';
+            new Tls_Mp_Http_Api();
         }
         
         public function myArticle(){
