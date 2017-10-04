@@ -3,7 +3,7 @@
      * wp_remote_get($url, $args):
      * wp_remote_post($url, $args): Gửi dữ liệu lên server (điền giá trị vào $args->body
      * wp_remote_head($url, $args): Lấy thông tin đơn giản, ko lấy body
-     * wp_remote_retrieve_body($response): Lấy nội dung của phần body (bỏ qua những phần khác)
+     * wp_remote_retrieve_body($response): Lấy nội dung của phần tử [body] (bỏ qua những phần khác)
      * wp_remote_retrieve_header($response, 'content-type'): Lấy nội dung header kèm phần tử.
      * wp_remote_retrieve_headers($response): Lấy mảng nội dung header.
      * 
@@ -17,6 +17,8 @@
         
         private $_menuSlug = 'tls-mp-http-api';
         
+        private $_version = '1.0';
+        
         public function __construct(){
             //echo '<br>' . __FILE__;
             
@@ -27,7 +29,105 @@
             add_menu_page('HTTP API', 'HTTP API', 'manage_options', 
                             $this->_menuSlug, array($this, 'display2'), '', 3);
             add_submenu_page($this->_menuSlug, 'Get Info', 'Get Info', 'manage_options',
-                $this->_menuSlug . '-info', array($this, 'display2'), '', 3);
+                $this->_menuSlug . '-info', array($this, 'check_customer'), '', 3);
+        }
+        
+        public function check_customer(){
+            $url = 'http://localhost/http/check_customer.php';
+            $args = array(
+                'headers'     => array('cus-id' => 'tls-123456'),   // Giá trị gửi vào biến $_SERVER của website ( [HTTP...] )
+                'body'        => array('username' =>'tienle', 'password' =>md5('123456')),
+            );
+            
+            $response = wp_remote_post($url, $args);
+            
+            if ($response['response']['code'] == '200'){
+                $info = json_decode($response['body']); 
+                $css = ($info->error == true)?'error':'updated';
+                
+                echo '<div class="' . $css . '"><p>' . $info->mes . '</p></div>';
+                
+                /* echo '<pre>';
+                print_r($info);
+                echo '</pre>'; */
+            }
+            
+            /* echo '<pre>';
+            print_r($response);
+            echo '</pre>'; */
+        }
+        
+        public function check_version(){
+            $url = 'http://localhost/http/check_version.php';
+            $args = array(
+                'headers'     => array('cus-id' => '123456'),   // Giá trị gửi vào biến $_SERVER của website ( [HTTP...] )
+                'body'        => array('username' =>'tienle', 'password' =>'123456'),
+            );
+            
+            $response = wp_remote_post($url, $args);
+            
+            if ($response['response']['code'] == '200'){
+                $info = json_decode($response['body']);
+                if($this->_version < $info->version){
+                    $msg = sprintf($info->mes, $info->version, $info->price, $info->discount);
+                    echo '<div class="updated"><p>' . $msg . '</p></div>';
+                }
+                
+                /* echo '<pre>';
+                print_r($info);
+                echo '</pre>'; */
+            }
+            
+            /* echo '<pre>';
+            print_r($response);
+            echo '</pre>'; */
+        }
+        
+        public function json_data2(){
+            $url = 'http://localhost/http/json2.php?status=0';
+            $args = array(
+                'headers'     => array('cus-id' => '123456'),   // Giá trị gửi vào biến $_SERVER của website ( [HTTP...] )
+                'body'        => array('username' =>'tienle', 'password' =>'123456'),
+            );
+        
+            $response = wp_remote_post($url, $args);
+        
+            if (wp_remote_retrieve_response_code($response) == '200'){
+                $info = json_decode(wp_remote_retrieve_body($response));
+                echo '<ul>';
+                foreach ($info as $item){
+                    echo '<li>'. $item->id . ': ' . $item->title . '</li>';
+                }
+                echo '</ul>';
+            }
+        
+            echo '<pre>';
+            print_r($response);
+            echo '</pre>';
+        }
+        
+        public function json_data(){
+            $url = 'http://localhost/http/json.php';
+            $args = array(
+                'headers'     => array('cus-id' => '123456'),   // Giá trị gửi vào biến $_SERVER của website ( [HTTP...] )
+                'body'        => array('username' =>'tienle', 'password' =>'123456'),
+            );
+            
+            $response = wp_remote_post($url, $args);
+            
+            if (wp_remote_retrieve_response_code($response) == '200'){                
+                $info = json_decode(wp_remote_retrieve_body($response));
+                echo '<ul>';
+                    foreach ($info as $item){
+                        echo '<li>'. $item->id . ': ' . $item->title . '</li>';
+                    }
+                echo '</ul>';
+            }
+            
+            
+            echo '<pre>';
+            print_r($response);
+            echo '</pre>';
         }
         
         public function display2() {
