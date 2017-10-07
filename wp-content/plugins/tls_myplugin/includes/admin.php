@@ -5,7 +5,7 @@
             //$this->ajaxPage2();
             //$this->tabsPage();
             
-            $this->myHttp();
+            $this->myArticle();
             
         }
         

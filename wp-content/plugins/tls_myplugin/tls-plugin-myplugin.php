@@ -40,17 +40,22 @@ if(!is_admin()){
 }
 
 ////////////////// Khu vực cả font-end và back-end đều hiển thị ////////////////////
-/* require_once TLS_PLUGIN_CUSTOMPOSTS_DIR . 'product.php';
-new Tls_Mp_Cp_Product(); */
+require_once TLS_PLUGIN_CUSTOMPOSTS_DIR . 'product.php';
+new Tls_Mp_Cp_Product();
 
-/* require_once TLS_PLUGIN_TAXXONOMY_DIR . 'book.php';
-new Tls_Mp_CustomTaxonomy_BookCategory(); */
+require_once TLS_PLUGIN_TAXXONOMY_DIR . 'book.php';
+new Tls_Mp_CustomTaxonomy_BookCategory();
+
+// Rewrite phải chạy sau các phần khác
+require_once TLS_PLUGIN_DIR . '/rewrite.php';
+$options['file'] = __FILE__;
+new Tls_Mp_Rewite($options);
 
 /* require_once TLS_PLUGIN_METABOX_DIR . 'taxonomy.php';
 new Tls_Mp_Mb_Taxonomy(); */
 
-require_once TLS_PLUGIN_CUSTOMPOSTS_DIR . 'count_views.php';
-new Tls_Mp_Count_Views();
+/* require_once TLS_PLUGIN_CUSTOMPOSTS_DIR . 'count_views.php';
+new Tls_Mp_Count_Views(); */
 
 
 /* require_once TLS_PLUGIN_SHORTCODES_DIR . 'main.php';

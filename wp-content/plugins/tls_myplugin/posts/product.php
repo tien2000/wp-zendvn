@@ -105,7 +105,7 @@
     // 			'register_meta_box_cb'  => null,
      			'taxonomies'            => array('book-category'),
      			'has_archive'           => true,
-     			'rewrite'               => true,
+     			'rewrite'               => array('slug'=>'tproduct'),
     // 			'query_var'             => true,
     // 			'can_export'            => true,
     // 			'delete_with_user'      => null,
@@ -117,5 +117,6 @@
 		    );
             
             register_post_type('tproduct', $args);
+            //flush_rewrite_rules(false);
         }
     }

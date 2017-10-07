@@ -173,6 +173,12 @@
 
 <?php endwhile; // End the loop. Whew. ?>
 
+<?php 
+    /* echo '<pre>';
+    print_r($wp_rewrite);
+    echo '</pre>'; */
+?>
+
 <?php /* Display navigation to next/previous pages when applicable */ ?>
 <?php if (  $wp_query->max_num_pages > 1 ) : ?>
 				<div id="nav-below" class="navigation">

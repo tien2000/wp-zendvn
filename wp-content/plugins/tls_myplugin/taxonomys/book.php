@@ -43,5 +43,6 @@
             );
             
             register_taxonomy('book-category', 'tproduct', $args);
+            //flush_rewrite_rules(false);
         }
     }
