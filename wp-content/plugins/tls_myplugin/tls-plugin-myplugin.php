@@ -51,6 +51,8 @@ require_once TLS_PLUGIN_DIR . '/rewrite.php';
 $options['file'] = __FILE__;
 new Tls_Mp_Rewite($options);
 
+require_once TLS_PLUGIN_INCLUDES_DIR . 'debugs.php';
+
 /* require_once TLS_PLUGIN_METABOX_DIR . 'taxonomy.php';
 new Tls_Mp_Mb_Taxonomy(); */
 
