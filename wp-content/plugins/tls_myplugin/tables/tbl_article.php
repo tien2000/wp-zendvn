@@ -203,7 +203,6 @@ class Article_Table extends WP_List_Table{
     public function column_status( $item ){
         $page = @$_REQUEST['page'];
         $paged = max(1, @$_REQUEST['paged']);       //Phân trang
-        $name = 'security_code';
         
         if($item['status'] == 1){
             $action = 'inactive';
@@ -214,7 +213,8 @@ class Article_Table extends WP_List_Table{
         }
         
         $lnkStatus = add_query_arg(array('paged' => $paged, 'action' => $action, 'article' => $item['id']));
-        $action = 'action_id_' . $item['id'];       // đang lỗi :(
+        $action = 'status_id' . $item['id'];
+        $name = 'security_code';
         $lnkStatus = wp_nonce_url($lnkStatus, $action, $name);
         
     

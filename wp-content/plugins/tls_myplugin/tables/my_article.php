@@ -113,7 +113,7 @@
             if($action == 'inactive' || $action == 'active'){
                 $func = 'status';
                 $name = 'security_code';                
-                $action = 'action_id' . $_GET['action'];    // đang lỗi :(
+                $action = 'status_id' . $_GET['article'];
                 
                 if(!isset($_GET['security_code']) || empty($_GET['security_code']) || !check_admin_referer($action, $name)){
                     return $func = 'no_access';
