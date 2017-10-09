@@ -111,26 +111,6 @@ class Article_Table extends WP_List_Table{
         return get_the_author_meta('display_name', $item['author_id']);
     }
     
-    public function column_status( $item ){
-        $page = @$_REQUEST['page'];
-        
-        if($item['status'] == 1){
-            $action = 'inactive';
-            $src = TLS_PLUGIN_IMAGES_URL . 'active.png';
-        }else{
-            $action = 'active';
-            $src = TLS_PLUGIN_IMAGES_URL . 'inactive.png';
-        }       
-        
-        $paged = max(1, @$_REQUEST['paged']);       //Phân trang
-        
-        $html = '<img src=' . $src . ' />';
-        $html = '<a href="?page=' . $page . '&paged=' . $paged . '&action=' . $action 
-                . '&article=' . $item['id'] . '">'.$html.'</a>';
-        
-        return $html;
-    }
-    
     public function get_sortable_columns(){
         $sortTable = array(
             'title'     => array('title', false),    // Tạo mũi tên sắp xếp cho Title, Id
@@ -202,16 +182,49 @@ class Article_Table extends WP_List_Table{
     
     //====================== HÀM THAY ĐỔI DỮ LIỆU HIỂN THỊ TRONG BẢNG =================// 
     public function column_title($item){
-        $page = $_REQUEST['page'];
+        $page = @$_REQUEST['page'];
+        
+        //http://localhost/wp-zendvn/wp-admin/admin.php?page=tls-mp-table-myarticle&action=delete&article=17
+        $lnkDelete = add_query_arg(array('action' => 'delete', 'article' => $item['id']));
+        $action = 'delete_id_' . $item['id'];
+        $name = 'security_code';
+        $lnkDelete = wp_nonce_url($lnkDelete, $action, $name);
         
         $actions = array(
             'edit'          => '<a href="?page='. $page .'&action=edit&article='. $item['id'] .'">Edit</a>',
-            'delete'        => '<a href="?page='. $page .'&action=delete&article='. $item['id'] .'">Delete</a>',
+            'delete'        => '<a href="'.$lnkDelete.'">Delete</a>',
             'view'          => '<a href="#">View</a>',
         );
         $title = '<strong><a href="?page='. $page .'&action=edit&article='. $item['id'] .'">' 
                     . $item['title'] . '</a></strong>' . $this->row_actions($actions);
         return $title;
+    }
+    
+    public function column_status( $item ){
+        $page = @$_REQUEST['page'];
+        $paged = max(1, @$_REQUEST['paged']);       //Phân trang
+        $name = 'security_code';
+        
+        if($item['status'] == 1){
+            $action = 'inactive';
+            $src = TLS_PLUGIN_IMAGES_URL . 'active.png';
+        }else{
+            $action = 'active';
+            $src = TLS_PLUGIN_IMAGES_URL . 'inactive.png';
+        }
+        
+        $lnkStatus = add_query_arg(array('paged' => $paged, 'action' => $action, 'article' => $item['id']));
+        $action = 'action_id_' . $item['id'];       // đang lỗi :(
+        $lnkStatus = wp_nonce_url($lnkStatus, $action, $name);
+        
+    
+        $html = '<img src=' . $src . ' />';
+        /* $html = '<a href="?page=' . $page . '&paged=' . $paged . '&action=' . $action
+        . '&article=' . $item['id'] .  '&security_code=' . $lnkStatus . '">'.$html.'</a>'; */
+    
+        $html = '<a href="' . $lnkStatus .'">'.$html.'</a>';
+        
+        return $html;
     }
     
     public function column_cb($item){

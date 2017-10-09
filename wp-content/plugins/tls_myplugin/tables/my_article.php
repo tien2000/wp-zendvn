@@ -3,6 +3,7 @@
      * wp_verify_nonce( $nonce, $action )
      *  - $nonce: Giá trị security_code trong ô input ẩn trong form.
      *  - $action: value của ô input ẩn trong form
+     *  check_admin_referer(): tương tự wp_verify_nonce() nhưng được sử dụng ở trong admin.
      *  */
 ?>
 
@@ -65,6 +66,12 @@
              * ====================================== */
             if($action == 'edit'){
                 $func = 'display_edit';
+                $name = 'security_code';
+                $action = 'edit_id_' . $_GET['article'];
+                
+                if(!empty($_POST['security_code']) && !check_admin_referer($action, $name)){
+                    return $func = 'no_access';
+                }
                 if(!$cap->check_cap('tls_mp_article_edit')){
                     $func = 'no_access';
                 }
@@ -82,6 +89,12 @@
              * ====================================== */
             if($action == 'delete'){
                 $func = 'delete_data';
+                $name = 'security_code';
+                $action = 'delete_id_' . $_GET['article'];
+                
+                if(!isset($_GET['security_code']) || empty($_GET['security_code']) || !check_admin_referer($action, $name)){
+                    return $func = 'no_access';
+                }
                 if(!$cap->check_cap('tls_mp_article_delete')){
                     $func = 'no_access';
                 }
@@ -99,6 +112,12 @@
              * ====================================== */
             if($action == 'inactive' || $action == 'active'){
                 $func = 'status';
+                $name = 'security_code';                
+                $action = 'action_id' . $_GET['action'];    // đang lỗi :(
+                
+                if(!isset($_GET['security_code']) || empty($_GET['security_code']) || !check_admin_referer($action, $name)){
+                    return $func = 'no_access';
+                }
                 if(!$cap->check_cap('tls_mp_article_status')){
                     $func = 'no_access';
                 }
@@ -192,8 +211,11 @@
             }
             // Cập nhật dữ liệu mới
             else{
-                $security_code = @$_REQUEST['security_code'];
-                if(wp_verify_nonce($security_code, 'edit')){
+                $name = 'security_code';
+                $action = 'edit_id_' . $_GET['article'];
+                if(!check_admin_referer($action, $name)){
+                    return $func = 'no_access';
+                }else {
                     // Kiểm tra dữ liệu nhập vào
                     $errors = $this->validate_form();
                     /* echo '<pre>';
@@ -205,7 +227,7 @@
                         $url = $_REQUEST['_wp_http_referer'] . '&mes=1';
                         wp_redirect($url);
                     }
-                }
+                }                
             }            
             require_once TLS_PLUGIN_TABLE_DIR . 'html/article_form.php';
         }

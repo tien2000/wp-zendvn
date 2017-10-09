@@ -59,8 +59,15 @@
 	<?php echo $mes;?>
 	<form method="post" action="" id="<?php echo $page;?>" enctype="multipart/form-data">
 		<input type="hidden" name="action" value="<?php echo $action;?>">
-		<?php wp_nonce_field($action, 'security_code', false);?>
-		<?php wp_referer_field();?>
+		
+		<?php 
+		  if($action == 'edit'){
+		      $action = 'edit_id_' . $_REQUEST['article'];
+		  }
+		?>
+		
+		<?php wp_nonce_field($action, 'security_code', true); // true thì đóng dòng dưới, false thì mở ra?>		
+		<?php //wp_referer_field();?>
 		<h3>Information:</h3>
 		<table class="form-table">
 			<tbody>

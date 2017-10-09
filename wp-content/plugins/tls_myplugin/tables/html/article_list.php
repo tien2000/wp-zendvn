@@ -4,7 +4,7 @@
     /* echo '<pre>';
     print_r($tblArticle);
     echo '</pre>'; */
-    $page = @$_REQUEST['page'];
+    $page = @$_REQUEST['page'];   
 ?>
 
 <div class="wrap">
