@@ -51,6 +51,13 @@
             
             add_submenu_page($this->_menuSlug, 'Add New', 'Add New', 'tls_mp_article_list', 
                                 $this->_menuSlug . '-add', array($this, $addFunc));
+            
+            add_submenu_page($this->_menuSlug, 'Validation', 'Validation', 'manage_options',
+                $this->_menuSlug . '-filter', array($this, 'data_filter'));
+        }
+        
+        public function data_filter(){
+            require_once TLS_PLUGIN_TABLE_DIR . 'html/filter_form.php';
         }
 
         private function get_func(){
