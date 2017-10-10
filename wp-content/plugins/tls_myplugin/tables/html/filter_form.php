@@ -10,17 +10,99 @@
      * esc_js(): Bỏ qua các giá trị js
      * esc_url($val): Bỏ qua các giá trị url (Sử dụng cho chuỗi nhận được trong quá trình GET hoặc POST để in đường dẫn)
      * esc_url_raw( $url, $protocols): Bỏ qua các giá trị url (Sử dụng cho nội dung lấy trong db)
+     * esc_sql(): Bỏ qua câu truy vấn được gắn thêm ở phía sau (chống hack). Sử dụng khi tham số là chuỗi.
+     * esc_like(): Thay thế LIKE trong sql.
+     * $wpdb->prepare($query, array|mixed $args):
+     * sanitize_title($val): Chuyển chuỗi thường thành slug. 
+     * sanitize_user($username, bool): Lọc những ký tự ko cần thiết.
+     * tag_escape($tag_name): Xóa toàn bộ các ký tự ko thuộc 0-9 | a-z. 
+     * 
+     * intval($val): Giá trị có âm có dương, nếu là chuỗi trả về 0
+     * absint($val): Giá trị chỉ có dương, nếu là chuỗi trả về 0
+     * 
      *  */
 ?>
 
 <?php      
     $htmlObj    = new TlsHtml();
+    global $wpdb;
+    $table = $wpdb->prefix . 'mp_article';
+    
+    /* ==================================
+     * tag_escape
+     * ================================== */
+    $unsafeTag = "#1 Best! Movies! EVER!!!$@#%#$_.;";
+    
+    $safeTag = tag_escape($unsafeTag);
+    
+    echo '<br>$safeTag = ' . $safeTag;
+    
+    
+    /* ==================================
+     * sanitize_user
+     * ================================== */
+    /* echo '<br>' . $username = 'tienls@#$&';
+    echo '<br>' . sanitize_user($username, true); */
+    
+    
+    /* ==================================
+     * Database Insert || GET - POST
+     * ================================== */
+    /* $data = array(
+            'title'     => 'This is a test 123',
+            'slug'      => sanitize_title('This is a test 123'),
+            'picture'   => 'abc.jpg',
+            'content'   => 'This is a test content',
+            'status'    => 1,
+            'author_id'  => 1
+        );
+    $format = array('%s', '%s', '%s', '%s', '%d', '%d');
+    $wpdb->insert($table, $data, $format); */
+    
+    
+    /* ==================================
+     * Database Update || GET - POST
+     * ================================== */
+    /* $val = array(
+            'picture'   => 'abc123.jpg',
+            'status'    => 0        
+        );
+    $where = array('id' => 17);
+    $format_val = array('%s', '%d');
+    $where_format = array('%d');
+    
+    $wpdb->update($table, $val, $where, $format_val, $where_format); */
+    
+    
+    /* ==================================
+     * Database Prepare || GET - POST
+     * ================================== */
+    /* $title = $wpdb->esc_like($_GET['title']);
+    $title = '%' . $title . '%';
+    $author_id = $_GET['author_id'];
+    
+    $sql = $wpdb->prepare("SELECT * FROM $table WHERE title LIKE %s AND author_id = %d", $title, $author_id); */
+    /* echo '<br>' . $sql;
+    echo '<br>' . $wpdb->query($sql); */
+    
+    
+    /* ==================================
+     * Database esc_sql || GET - POST
+     * ================================== */  
+    /* $author_id = intval($_GET['author_id']);
+    $title = esc_sql($_GET['title']);
+    
+    //$sql = "SELECT * FROM $table WHERE author_id = $author_id";
+    $sql = "SELECT * FROM $table WHERE title = '$title'"; */
+    /* echo '<br>' . $sql;
+    echo '<br>' . $wpdb->query($sql); */
+    
     
     /* ==================================
      * URL || POST - GET - DB
      * ================================== */
-    $val = 'http://zend.vn/<script>alert(\'XSS\')</script>';
-    echo '<br>Origin: ' . esc_url($val);
+    /* $val = 'http://zend.vn/<script>alert(\'XSS\')</script>';
+    echo '<br>Origin: ' . esc_url($val); */
     
     /* $val = "javascript:alert('XSS')";
     $url = '<a href="'.$val.'">regular-text</a>';
